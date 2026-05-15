@@ -736,18 +736,26 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userMessage: messageText })
       });
-      const data = await response.json();
+      
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonErr) {
+        throw new Error("Invalid server response (Not JSON)");
+      }
       
       loadingDiv.remove(); // Drop the placeholder loading line
       
       if (response.ok) {
         appendMessage(data.reply, 'assistant');
       } else {
-        appendMessage("I'm sorry, I encountered an issue. Please try again.", 'assistant');
+        console.error("API Error Response:", data);
+        appendMessage("I'm sorry, I encountered an issue: " + (data.error || "Unknown Error"), 'assistant');
       }
     } catch (err) {
       loadingDiv.remove();
-      appendMessage("Network failure connecting to server.", 'assistant');
+      console.error("Fetch Error:", err);
+      appendMessage("Network failure: " + err.message, 'assistant');
     }
   });
 
