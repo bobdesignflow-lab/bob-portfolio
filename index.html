@@ -483,83 +483,213 @@
   </div>
 </footer>
 
-<!-- AI CHAT WIDGET -->
-<div class="chat-widget">
-  <div id="chat-window" class="chat-window">
+<!-- AI Chat Widget Wrapper -->
+<div id="ai-widget-container">
+  <!-- The Floating Chat Bubble Icon -->
+  <button id="ai-bubble-trigger" class="subtle-bounce" aria-label="Open AI Assistant">
+    <!-- Clean Modern AI/Spark Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"/>
+      <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5Z"/>
+      <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z"/>
+    </svg>
+    <span class="bubble-badge">AI Expert</span>
+  </button>
+
+  <!-- The Actual Chat Window (Hidden by Default) -->
+  <div id="ai-chat-window" class="hidden">
     <div class="chat-header">
-      <h3>AI Assistant</h3>
-      <button id="chat-close" class="chat-close">×</button>
+      <h4>Bob's Technical Agent</h4>
+      <p>Senior AI Assistant & Consultative Dev</p>
+      <button id="close-chat">&times;</button>
     </div>
     <div id="chat-messages" class="chat-messages">
-      <div class="message message--ai">Hello! I'm Bob's AI assistant. How can I help you learn more about his work?</div>
+      <div class="message assistant">Hello! I'm Bob's AI agent. Ask me about his full-stack capabilities, design services, or tell me about a project you want built!</div>
     </div>
-    <form id="chat-form" class="chat-input-area">
-      <input id="chat-input" type="text" placeholder="Type a message..." autocomplete="off">
-      <button type="submit" class="chat-send">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-      </button>
+    <form id="chat-input-form" class="chat-input-area">
+      <input type="text" id="chat-user-input" placeholder="Ask about tech stacks, booking a project..." required autocomplete="off">
+      <button type="submit">Send</button>
     </form>
-  </div>
-  <div id="chat-bubble" class="chat-bubble">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
   </div>
 </div>
 
-<script>
-  const chatBubble = document.getElementById('chat-bubble');
-  const chatWindow = document.getElementById('chat-window');
-  const chatClose = document.getElementById('chat-close');
-  const chatForm = document.getElementById('chat-form');
-  const chatInput = document.getElementById('chat-input');
-  const chatMessages = document.getElementById('chat-messages');
-
-  chatBubble.addEventListener('click', () => {
-    chatWindow.classList.toggle('open');
-    if (chatWindow.classList.contains('open')) chatInput.focus();
-  });
-
-  chatClose.addEventListener('click', () => chatWindow.classList.remove('open'));
-
-  function addMessage(text, type) {
-    const msg = document.createElement('div');
-    msg.className = `message message--${type}`;
-    msg.textContent = text;
-    chatMessages.appendChild(msg);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-    return msg;
+<style>
+  /* Container Positioning */
+  #ai-widget-container {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 9999;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
-  async function askGemini(messageFromUser, aiMsgElement) {
+  /* The Floating Button Trigger */
+  #ai-bubble-trigger {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0070f3, #7928ca);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(121, 40, 202, 0.3);
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  #ai-bubble-trigger:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(121, 40, 202, 0.5);
+  }
+
+  /* "AI Expert" Text Mini-Badge */
+  .bubble-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff0080;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  /* --- SUBTLE BOUNCING MOTIONS --- */
+  .subtle-bounce {
+    animation: gentleBounce 4s infinite ease-in-out;
+  }
+
+  @keyframes gentleBounce {
+    0%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }   /* Just a small bounce to get eye-tracking */
+    50% { transform: translateY(0); }
+    60% { transform: translateY(-3px); }   /* Tiny echo bounce */
+    70% { transform: translateY(0); }
+  }
+
+  /* Chat Box Container styling */
+  #ai-chat-window {
+    width: 360px;
+    height: 480px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid #eaeaea;
+  }
+
+  #ai-chat-window.hidden {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+  }
+
+  /* Header Styling */
+  .chat-header {
+    background: #111;
+    color: white;
+    padding: 15px;
+    position: relative;
+  }
+  .chat-header h4 { margin: 0; font-size: 16px; font-weight: 600; }
+  .chat-header p { margin: 4px 0 0; font-size: 11px; color: #aaa; }
+  #close-chat {
+    position: absolute; top: 12px; right: 15px;
+    background: transparent; border: none; color: white; font-size: 22px; cursor: pointer;
+  }
+
+  /* Message Display Feed Area */
+  .chat-messages {
+    flex: 1; padding: 15px; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 12px; background: #f9f9f9;
+  }
+  .message {
+    max-width: 80%; padding: 10px 14px; border-radius: 12px; font-size: 14px; line-height: 1.4;
+  }
+  .message.assistant { background: #eaeaea; color: #111; align-self: flex-start; border-bottom-left-radius: 2px; }
+  .message.user { background: #0070f3; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+  /* Input Form Area */
+  .chat-input-area { display: flex; border-top: 1px solid #eaeaea; background: white; }
+  #chat-user-input {
+    flex: 1; border: none; padding: 15px; font-size: 14px; outline: none;
+  }
+  .chat-input-area button {
+    background: transparent; color: #0070f3; border: none; font-weight: bold; padding: 0 20px; cursor: pointer;
+  }
+</style>
+
+<script>
+  const bubbleTrigger = document.getElementById('ai-bubble-trigger');
+  const chatWindow = document.getElementById('ai-chat-window');
+  const closeChat = document.getElementById('close-chat');
+  const chatForm = document.getElementById('chat-input-form');
+  const userInput = document.getElementById('chat-user-input');
+  const chatMessages = document.getElementById('chat-messages');
+
+  // Toggle Chat UI Panel Open/Close
+  bubbleTrigger.addEventListener('click', () => {
+    chatWindow.classList.toggle('hidden');
+    // Stop the bounce once the user engages
+    bubbleTrigger.classList.remove('subtle-bounce');
+    userInput.focus();
+  });
+
+  closeChat.addEventListener('click', () => chatWindow.classList.add('hidden'));
+
+  // Submit and route messages to Vercel Endpoint API
+  chatForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const messageText = userInput.value.trim();
+    if (!messageText) return;
+
+    // 1. Append user bubble
+    appendMessage(messageText, 'user');
+    userInput.value = '';
+
+    // 2. Add loading indicator placeholder
+    const loadingDiv = appendMessage('Thinking...', 'assistant');
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userMessage: messageFromUser })
+        body: JSON.stringify({ userMessage: messageText })
       });
-
       const data = await response.json();
-      if (response.ok && data.reply) {
-        aiMsgElement.textContent = data.reply;
+      
+      loadingDiv.remove(); // Drop the placeholder loading line
+      
+      if (response.ok) {
+        appendMessage(data.reply, 'assistant');
       } else {
-        aiMsgElement.textContent = "I'm sorry, I'm having trouble connecting right now. Error: " + (data.error || "Unknown");
+        appendMessage("Sorry, I encountered an issue parsing that request: " + data.error, 'assistant');
       }
     } catch (err) {
-      aiMsgElement.textContent = "Something went wrong. Please check your connection.";
-      console.error("Network Error:", err);
+      loadingDiv.remove();
+      appendMessage("Network failure connecting to server.", 'assistant');
     }
-  }
-
-  chatForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const text = chatInput.value.trim();
-    if (!text) return;
-
-    addMessage(text, 'user');
-    chatInput.value = '';
-
-    const aiMsg = addMessage('...', 'ai');
-    await askGemini(text, aiMsg);
   });
+
+  function appendMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.classList.add('message', sender);
+    msg.innerText = text;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Autoscroll window downwards
+    return msg;
+  }
 </script>
 
 <script src="assets/site.js"></script>
