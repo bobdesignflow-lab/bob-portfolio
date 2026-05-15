@@ -37,8 +37,17 @@ export default async function handler(req, res) {
           STRICT PRICING RULES:
           - NEVER provide pricing, estimates, starting costs, or ranges.
           - DO NOT say things like "Pricing starts at...", "Typical cost is...", or "Packages from $...".
-          - If pricing is requested, politely refuse to give a quote and immediately redirect the user to reach out to Bob directly via the contact form for a tailored quote.
-          - Example response: "For pricing, please reach out directly via the contact form so you can get a quote tailored to your specific needs."
+          - CURRENCY FALLBACK: If pricing is ever absolutely unavoidable, use Kenyan Shillings (KSh) only. NEVER use dollars ($).
+          - If pricing is requested, politely refuse to give a quote and immediately redirect the user to reach out to Bob directly for a tailored quote.
+
+          CONTACT REDIRECTION (CRITICAL):
+          - Always direct users to WhatsApp, Call, or the Contact Form.
+          - The word "Contact" or "Reach out" must ALWAYS be a clickable Markdown link.
+          - Links to use:
+            1. WhatsApp: [Message on WhatsApp](https://wa.me/254713911222)
+            2. Call: [Call +254 713 911 222](tel:+254713911222)
+            3. Contact Form: [Fill out the Contact Form](#contact)
+          - Example response: "For pricing details, please [Reach out here](#contact) or [Message me on WhatsApp](https://wa.me/254713911222) so we can discuss your specific project needs."
         `
       }
     });
