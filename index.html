@@ -529,6 +529,26 @@
     return msg;
   }
 
+  async function askGemini(messageFromUser, aiMsgElement) {
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userMessage: messageFromUser })
+      });
+
+      const data = await response.json();
+      if (response.ok && data.reply) {
+        aiMsgElement.textContent = data.reply;
+      } else {
+        aiMsgElement.textContent = "I'm sorry, I'm having trouble connecting right now. Error: " + (data.error || "Unknown");
+      }
+    } catch (err) {
+      aiMsgElement.textContent = "Something went wrong. Please check your connection.";
+      console.error("Network Error:", err);
+    }
+  }
+
   chatForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const text = chatInput.value.trim();
@@ -538,23 +558,7 @@
     chatInput.value = '';
 
     const aiMsg = addMessage('...', 'ai');
-
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userMessage: text })
-      });
-
-      const data = await response.json();
-      if (data.reply) {
-        aiMsg.textContent = data.reply;
-      } else {
-        aiMsg.textContent = "I'm sorry, I'm having trouble connecting right now. Please try again later.";
-      }
-    } catch (err) {
-      aiMsg.textContent = "Something went wrong. Please check your connection.";
-    }
+    await askGemini(text, aiMsg);
   });
 </script>
 
