@@ -20,7 +20,14 @@ export default async function handler(req, res) {
       model: 'gemini-3.1-flash-lite', 
       contents: userMessage,
       config: {
-        systemInstruction: "You are a senior full-stack developer AI assistant representing Bob. Help users with engineering queries and booking client requests."
+        systemInstruction: `
+          STRICT BREVITY RULE: You are a professional chat assistant for Bob. 
+          NEVER exceed 2-3 short sentences. 
+          STRICTLY PROHIBITED from sending long paragraphs or lists. 
+          Speak like a real person in a fast chat. 
+          Ask only ONE simple question at a time to keep the client engaged.
+          Refer to the creator as 'Bob'. No pricing.
+        `
       }
     });
 
