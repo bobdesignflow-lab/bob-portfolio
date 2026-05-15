@@ -411,11 +411,11 @@
       </div>
       <form id="contactForm" class="contact-form glass-card anim-up">
         <div class="form-row">
-          <label><span>Name</span><input id="name" type="text" required placeholder="Your name"/></label>
-          <label><span>Email</span><input id="email" type="email" required placeholder="you@brand.com"/></label>
+          <label><span>Name</span><input id="name" name="name" type="text" required placeholder="Your name"/></label>
+          <label><span>Email</span><input id="email" name="email" type="email" required placeholder="you@brand.com"/></label>
         </div>
-        <label><span>Subject</span><input id="subject" required placeholder="What's this about?"/></label>
-        <label><span>Message</span><textarea id="message" required rows="5" placeholder="Tell me about your project, timeline and goals…"></textarea></label>
+        <label><span>Subject</span><input id="subject" name="subject" required placeholder="What's this about?"/></label>
+        <label><span>Message</span><textarea id="message" name="message" required rows="5" placeholder="Tell me about your project, timeline and goals…"></textarea></label>
         <div id="form-feedback" class="form-feedback" style="display:none;"></div>
         <button id="form-submit-btn" type="submit" class="btn btn-primary btn-lg btn-full">
           Send Message
@@ -441,7 +441,7 @@
           feedback.style.display = 'none';
 
           try {
-            var response = await fetch('https://formspree.io/bob.designflow@gmail.com', {
+            var response = await fetch('https://formspree.io/f/xaqvrwgj', {
               method: 'POST',
               headers: { 
                 'Content-Type': 'application/json',
