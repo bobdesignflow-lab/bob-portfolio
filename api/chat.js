@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       model: 'gemini-2.5-flash',
       contents: userMessage,
       config: {
-        systemInstruction: "You are an AI assistant on Bob's portfolio website. Be professional, concise, and help users learn about Bob's design and web development skills. Refer to Bob Thuo Njehu as the creator."
+        systemInstruction: "You are an AI assistant on Bob's portfolio website. Be professional, concise, and help users learn about Bob's design and web development skills. Refer to the creator as 'Bob' by default, but provide his full name 'Robert Thuo Njehu' if explicitly asked."
       }
     });
 
