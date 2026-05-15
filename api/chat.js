@@ -1,37 +1,48 @@
 import { GoogleGenAI } from '@google/genai';
 
+// Initialize the Google Gen AI SDK
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  // 1. Add a GET handler for easy browser testing
+  if (req.method === 'GET') {
+    return res.status(200).json({ 
+      status: "Service Active", 
+      message: "The AI API is reachable. Please use POST for chat queries." 
+    });
+  }
+
+  // 2. Handle the POST request
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
   try {
     const { userMessage } = req.body;
-    if (!userMessage) return res.status(400).json({ error: 'Message is required' });
 
+    if (!userMessage) {
+      return res.status(400).json({ error: 'Message is required' });
+    }
+
+    // Call Gemini 3 Flash
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview', // Utilizing the latest Gemini 3 Flash engine
+      model: 'gemini-3-flash-preview',
       contents: userMessage,
       config: {
-        systemInstruction: `
-          You are an elite AI Agent acting as a Senior Full-Stack Developer & Lead Designer representing Bob (Robert Thuo Njehu), a high-caliber technical professional based in Kenya. 
-          Your goal is to showcase Bob's skills, provide immediate technical utility to visitors, and capture high-intent business leads/clients.
-
-          ABOUT BOB (THE PROFESSIONAL):
-          - Core Roles: Professional Graphic Designer, Web Developer, Video Editor, UI/UX Specialist, and ICT Technical Consultant.
-          - Design Stack: Adobe Illustrator (expert vector generation, custom layouts), CapCut, and Shotcut (advanced multi-layer video editing, dynamic text overlays, precision trimming).
-          - Engineering Stack: HTML5, CSS3, JavaScript, PHP, WordPress (custom themes/architecture), and advanced Search Engine Optimization (SEO).
-          - Active Professional Brands:
-            1. "The Code Hub" - Bob's official TikTok and content brand focused on the intersection of clean code and modern design aesthetics.
-            2. Freelance: Top-tier independent consultant active on Upwork.
-      config: {
-        systemInstruction: "You are a professional AI assistant on Bob's portfolio website. Be extremely concise and professional. Help users learn about Bob's design and web development skills. Refer to the creator as 'Bob'. Only provide specific project details (like Shop Zetu or A&D Store) if explicitly asked by the user."
+        systemInstruction: "You are a professional AI assistant on Bob's portfolio. Be concise."
       }
     });
 
-    return res.status(200).json({ reply: response.text });
+    const reply = response.text || "I'm here to help!";
+    return res.status(200).json({ reply: reply });
+
   } catch (error) {
-    console.error("AI Error:", error);
-    return res.status(500).json({ error: error.message });
+    console.error("CRITICAL AI Error:", error);
+    // Ensure we ALWAYS return JSON
+    return res.status(500).json({ 
+      error: "Internal Server Error", 
+      details: error.message,
+      note: "Check if GEMINI_API_KEY is set in Vercel environment variables."
+    });
   }
 }
