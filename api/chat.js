@@ -24,9 +24,9 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Missing GEMINI_API_KEY in Vercel settings" });
     }
 
-    // Official Pattern for @google/generative-ai
+    // Official Pattern    // Using -latest to ensure the most compatible version is used
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-1.5-flash-latest",
       systemInstruction: "You are a professional AI assistant on Bob's portfolio. Be extremely concise (1-2 lines). Never give prices; instead, provide clickable links for WhatsApp or calling if relevant."
     });
 
