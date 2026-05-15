@@ -1,9 +1,10 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from '@google/genai';
 
-// Initialize the Google Gen AI SDK
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Initialize the Google Gen AI SDK using your hidden environment variable
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export default async function handler(req, res) {
+  // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -15,16 +16,21 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Message is required' });
     }
 
-    // Using Gemini 1.5 Flash (stable) or 2.0/2.5 as requested by user
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
-      systemInstruction: "You are an AI assistant on Bob's portfolio website. Be professional, concise, and help users learn about Bob's design and web development skills. Refer to Bob Thuo Njehu as the creator."
+    // Call the lightning-fast Gemini 1.5 Flash model
+    // Note: 'gemini-1.5-flash' is the stable flagship flash model
+    const response = await ai.models.generateContent({
+      model: 'gemini-1.5-flash',
+      contents: userMessage,
+      config: {
+        systemInstruction: "You are an AI assistant on Bob's portfolio website. Be professional, concise, and help users learn about Bob's design and web development skills. Refer to Bob Thuo Njehu as the creator."
+      }
     });
 
-    const result = await model.generateContent(userMessage);
-    const responseText = result.response.text();
+    // Send Gemini's text response back to the frontend
+    // The new SDK structure returns the text directly in some versions or via response property
+    const reply = response.text || (response.candidates && response.candidates[0].content.parts[0].text);
 
-    return res.status(200).json({ reply: responseText });
+    return res.status(200).json({ reply: reply || "I'm here to help! What would you like to know?" });
 
   } catch (error) {
     console.error("AI Error:", error);
