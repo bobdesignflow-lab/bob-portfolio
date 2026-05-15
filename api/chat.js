@@ -42,9 +42,10 @@ export default async function handler(req, res) {
           
           CONTACT REDIRECTION (CRITICAL):
           - Only provide these when relevant:
-            1. WhatsApp: [Message on WhatsApp](https://wa.me/254713911222)
-            2. Call: [Call +254 713 911 222](tel:+254713911222)
-            3. Contact Form: [Fill out the Contact Form](#contact)
+            * [Message on WhatsApp](https://api.whatsapp.com/send?phone=254713911222)
+            * [Call +254 713 911 222](tel:+254713911222)
+            * [Fill out the Contact Form](#contact)
+          - NEAT ARRANGEMENT: When providing these options, always use a bulleted list format so they appear neatly arranged.
           - CURRENCY FALLBACK: Use Kenyan Shillings (KSh) only. NEVER use dollars ($).
         `
       }

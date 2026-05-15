@@ -765,7 +765,16 @@
   function appendMessage(text, sender) {
     const msg = document.createElement('div');
     msg.classList.add('message', sender);
-    if (text) msg.innerText = text;
+    
+    if (text) {
+      // Basic Markdown Link & Bullet Point Rendering
+      let formattedText = text
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: #0070f3; font-weight: bold; text-decoration: underline;">$1</a>')
+        .replace(/\n/g, '<br>');
+      
+      msg.innerHTML = formattedText;
+    }
+    
     chatMessages.appendChild(msg);
     chatMessages.scrollTop = chatMessages.scrollHeight; // Autoscroll window downwards
     return msg;
