@@ -1,6 +1,6 @@
-import { GoogleGenerativeAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Initialize the Google Gen AI SDK
+// Initialize the Google Gen AI SDK with the OFFICIAL library
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export default async function handler(req, res) {
@@ -21,10 +21,10 @@ export default async function handler(req, res) {
     if (!userMessage) return res.status(400).json({ error: 'Message is required' });
 
     if (!process.env.GEMINI_API_KEY) {
-      throw new Error("GEMINI_API_KEY is not configured in Vercel environment variables.");
+      return res.status(500).json({ error: "Missing GEMINI_API_KEY in Vercel settings" });
     }
 
-    // Official Stable Pattern
+    // Official Pattern for @google/generative-ai
     const model = genAI.getGenerativeModel({ 
       model: "gemini-1.5-flash",
       systemInstruction: "You are a professional AI assistant on Bob's portfolio. Be extremely concise (1-2 lines). Never give prices; instead, provide clickable links for WhatsApp or calling if relevant."
