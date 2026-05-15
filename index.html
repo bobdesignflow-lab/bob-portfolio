@@ -753,7 +753,8 @@
         appendMessage(data.reply, 'assistant');
       } else {
         console.error("API Error Response:", data);
-        appendMessage("I'm sorry, I encountered an issue: " + (data.error || "Unknown Error"), 'assistant');
+        const errorMsg = data.details ? `AI Connection Failed: ${data.details}` : (data.error || "Unknown Error");
+        appendMessage("I'm sorry, I encountered an issue: " + errorMsg, 'assistant');
       }
     } catch (err) {
       loadingDiv.remove();
