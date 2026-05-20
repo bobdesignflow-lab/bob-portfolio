@@ -1,776 +1,1334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Robert Thuo Njehu | Designer & Developer</title>
-<meta name="description" content="Robert Thuo Njehu is a multidisciplinary designer & full-stack developer from Kenya, crafting cinematic websites, premium brands and interactive digital experiences."/>
-<meta property="og:title" content="Robert Thuo Njehu — Designer & Developer"/>
-<meta property="og:description" content="Premium portfolio of a Nairobi-based designer & developer building modern web experiences."/>
-<meta property="og:type" content="website"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/site.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Robert Thuo Njehu — Multidisciplinary designer & full-stack developer from Kenya, crafting cinematic websites, premium brands and interactive digital experiences.">
+<title>Robert Thuo Njehu — Designer & Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0A09;
+  --paper:#F5F0E8;
+  --paper-dark:#EDE7DB;
+  --gold:#B8965A;
+  --gold-light:#D4AE72;
+  --muted:#8A8178;
+  --muted-light:#C4BDB5;
+  --muted-on-light:#4A4340;
+  --surface:#181410;
+  --surface-2:#221E1A;
+  --border-gold:rgba(184,150,90,0.3);
+  --border-paper:rgba(245,240,232,0.1);
+}
+html{font-size:17px}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;cursor:none}
+
+.cursor-dot{position:fixed;width:6px;height:6px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s,background .2s;opacity:.6}
+.cursor-ring.hover{width:48px;height:48px;opacity:1;background:rgba(184,150,90,.08)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:background .4s,padding .4s,backdrop-filter .4s}
+nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1rem 4rem;border-bottom:1px solid var(--border-gold)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--paper);text-decoration:none;letter-spacing:.08em}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:.88rem;font-weight:400;color:var(--muted-light);text-decoration:none;text-transform:uppercase;letter-spacing:.15em;transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.nav-links a:hover{color:var(--paper)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:.6rem 1.6rem;text-decoration:none;transition:background .3s;font-family:'Jost',sans-serif}
+.nav-cta:hover{background:var(--gold-light)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem}
+.nav-toggle span{display:block;width:24px;height:1px;background:var(--paper);margin:5px 0;transition:all .3s}
+
+/* HERO */
+#hero{min-height:100vh;background:var(--ink);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
+.hero-bg-text{position:absolute;top:50%;left:-2rem;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(14rem,22vw,26rem);font-weight:300;color:transparent;-webkit-text-stroke:1px rgba(184,150,90,.06);white-space:nowrap;pointer-events:none;line-height:1;user-select:none}
+.hero-content{padding:12rem 4rem 6rem;position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center}
+.hero-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem}
+.hero-eyebrow::before{content:'';display:block;width:2.5rem;height:1px;background:var(--gold)}
+.hero-eyebrow span{font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:400}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,6vw,6.5rem);font-weight:300;color:var(--paper);line-height:1.08;margin-bottom:2rem}
+.hero-title em{font-style:italic;color:var(--gold-light)}
+.hero-subtitle{font-size:1.05rem;color:var(--muted-light);line-height:1.9;max-width:38ch;margin-bottom:3rem;font-weight:300}
+.hero-actions{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+.btn-primary{font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:.85rem 2.5rem;text-decoration:none;transition:all .3s;display:inline-block}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-1px)}
+.btn-outline{font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;color:var(--paper);border:1px solid rgba(245,240,232,.3);padding:.85rem 2.5rem;text-decoration:none;transition:all .3s;display:inline-block}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.hero-stats{display:flex;gap:3rem;padding:2.5rem 0 0;border-top:1px solid var(--border-gold);margin-top:3rem}
+.hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--gold);line-height:1}
+.hero-stat-label{font-size:.82rem;text-transform:uppercase;letter-spacing:.15em;color:var(--muted-light);margin-top:.4rem;font-weight:400}
+.hero-image{position:relative;overflow:hidden;min-height:100vh}
+.hero-image img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(15%) contrast(1.05);display:block}
+.hero-image::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--ink) 0%,transparent 35%,transparent 85%,rgba(12,10,9,.3) 100%);pointer-events:none}
+.hero-image::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--ink) 0%,transparent 25%);pointer-events:none;z-index:1}
+
+/* MARQUEE */
+.marquee-section{background:var(--gold);padding:1rem 0;overflow:hidden}
+.marquee-track{display:flex;animation:marquee 35s linear infinite;width:max-content}
+.marquee-item{font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);font-weight:500;padding:0 2.5rem;white-space:nowrap;font-family:'Jost',sans-serif}
+.marquee-item::after{content:'·';margin-left:2.5rem}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTION BASE */
+.sec{padding:8rem 4rem;position:relative}
+.sec-dark{background:var(--surface);color:var(--paper)}
+.sec-light{background:var(--paper)}
+.section-label{display:flex;align-items:center;gap:1rem;margin-bottom:3rem}
+.section-label::before{content:'';display:block;width:2.5rem;height:1px;background:var(--gold)}
+.section-label span{font-size:.82rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);font-weight:400}
+.section-num{font-family:'Cormorant Garamond',serif;font-size:.82rem;color:var(--muted);letter-spacing:.1em}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,4.2vw,4.8rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem}
+.section-title em{font-style:italic;color:var(--gold)}
+.on-dark{color:var(--paper)}
+
+/* ABOUT */
+#about{background:var(--paper);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;padding:8rem 4rem}
+.about-image{position:relative}
+.about-image img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
+.about-image::before{content:'';position:absolute;inset:-1.5rem 1.5rem 1.5rem -1.5rem;border:1px solid var(--border-gold);z-index:-1}
+.about-tags{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+.about-tag{font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--border-gold);padding:.4rem 1rem}
+.about-body{font-size:1.05rem;line-height:1.9;color:var(--muted-on-light);font-weight:300;margin-bottom:1.2rem}
+.about-body strong{color:var(--ink);font-weight:600}
+.about-body em{color:var(--gold);font-style:normal}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border-paper);margin-top:4rem}
+.service-card{padding:2.5rem;border-right:1px solid var(--border-paper);border-bottom:1px solid var(--border-paper);position:relative;overflow:hidden;transition:background .4s}
+.service-card:nth-child(3n){border-right:none}
+.service-card:nth-child(n+7){border-bottom:none}
+.service-card:hover{background:var(--surface-2)}
+.service-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gold);transition:width .4s}
+.service-card:hover::after{width:100%}
+.service-num{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--gold);font-weight:300;margin-bottom:1.5rem;letter-spacing:.05em}
+.service-title{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:400;color:var(--paper);margin-bottom:.8rem}
+.service-desc{font-size:.95rem;line-height:1.75;color:var(--muted-light);font-weight:300}
+
+/* SKILLS */
+.skills-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:6rem;margin-top:4rem;align-items:start}
+.skills-intro p{font-size:1.05rem;line-height:1.9;color:var(--muted-on-light);font-weight:300;margin-bottom:1.5rem}
+.skill-item{margin-bottom:1.6rem}
+.skill-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem}
+.skill-name{font-size:.88rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);font-weight:500}
+.skill-pct{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);font-weight:300}
+.skill-bar-bg{height:2px;background:var(--paper-dark);overflow:hidden}
+.skill-bar-fill{height:100%;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.19,1,.22,1)}
+
+/* WORK */
+.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:4rem}
+.work-card{position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--surface-2)}
+.work-card-bg{position:absolute;inset:0;transition:transform .7s cubic-bezier(.19,1,.22,1)}
+.work-card:hover .work-card-bg{transform:scale(1.06)}
+.work-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,10,9,.95) 0%,rgba(12,10,9,.15) 60%,transparent 100%);z-index:1;transition:background .4s}
+.work-card:hover .work-card-overlay{background:linear-gradient(to top,rgba(12,10,9,.98) 0%,rgba(12,10,9,.5) 60%,rgba(12,10,9,.1) 100%)}
+.work-card-content{position:absolute;bottom:0;left:0;right:0;padding:2rem;z-index:2;transform:translateY(.4rem);transition:transform .4s}
+.work-card:hover .work-card-content{transform:translateY(0)}
+.work-tags{display:flex;gap:.5rem;margin-bottom:.8rem}
+.work-tag{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--border-gold);padding:.25rem .6rem}
+.work-title{font-family:'Cormorant Garamond',serif;font-size:1.85rem;font-weight:300;color:var(--paper);line-height:1.15}
+.work-subtitle{font-size:.9rem;color:var(--muted-light);margin-top:.35rem;font-weight:300}
+.work-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);text-decoration:none;margin-top:1rem;opacity:0;transform:translateY(.4rem);transition:opacity .3s .1s,transform .3s .1s}
+.work-card:hover .work-link{opacity:1;transform:translateY(0)}
+.work-bg-1{background:linear-gradient(135deg,#1a0f2e 0%,#2d1754 50%,#1a0f2e 100%)}
+.work-bg-2{background:linear-gradient(135deg,#0d1f1a 0%,#1a3d32 50%,#0d1f1a 100%)}
+.work-bg-3{background:linear-gradient(135deg,#1f1a0d 0%,#3d320d 50%,#1f1a0d 100%)}
+.work-bg-4{background:linear-gradient(135deg,#1f0d1a 0%,#3d1932 50%,#1f0d1a 100%)}
+.work-bg-5{background:linear-gradient(135deg,#0d1a1f 0%,#0d3240 50%,#0d1a1f 100%)}
+.work-bg-6{background:linear-gradient(135deg,#1a1a0d 0%,#322800 50%,#1a1a0d 100%)}
+
+/* WHY ME */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border-gold);margin-top:4rem}
+.why-item{padding:3rem;border-right:1px solid var(--border-gold);border-bottom:1px solid var(--border-gold);transition:background .3s}
+.why-item:hover{background:var(--paper-dark)}
+.why-item:nth-child(3n){border-right:none}
+.why-item:nth-last-child(-n+3){border-bottom:none}
+.why-icon{width:2.2rem;height:2.2rem;border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
+.why-icon-inner{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.why-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:500;color:var(--ink);margin-bottom:.6rem}
+.why-desc{font-size:.95rem;line-height:1.75;color:var(--muted-on-light);font-weight:300}
+
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:4rem}
+.testimonial-card{padding:3rem;border:1px solid var(--border-paper);position:relative;transition:border-color .3s}
+.testimonial-card:hover{border-color:rgba(184,150,90,.5)}
+.testimonial-card::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:7rem;color:var(--gold);opacity:.12;position:absolute;top:.5rem;left:1.5rem;line-height:1;font-weight:300;pointer-events:none}
+.testimonial-text{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:var(--paper);line-height:1.7;font-weight:300;position:relative;z-index:1;margin-bottom:2rem}
+.testimonial-author{display:flex;align-items:center;gap:1rem}
+.testimonial-avatar{width:2.5rem;height:2.5rem;background:rgba(184,150,90,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);font-weight:400;border:1px solid var(--border-gold);flex-shrink:0}
+.testimonial-name{font-size:.95rem;font-weight:500;color:var(--paper)}
+.testimonial-role{font-size:.82rem;color:var(--muted-light);font-weight:300;margin-top:.15rem}
+
+/* CONTACT */
+#contact{background:var(--ink);padding:8rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem}
+.contact-desc{font-size:1.05rem;line-height:1.9;color:var(--muted-light);font-weight:300;margin-bottom:3rem}
+.contact-detail{display:flex;flex-direction:column;gap:1.5rem;margin-bottom:3rem}
+.contact-item{display:flex;flex-direction:column;gap:.25rem}
+.contact-item-label{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.contact-item-value{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--paper);font-weight:300}
+.contact-item-value a{color:inherit;text-decoration:none;transition:color .3s}
+.contact-item-value a:hover{color:var(--gold)}
+.contact-form{display:flex;flex-direction:column;gap:1.5rem}
+.form-group{display:flex;flex-direction:column;gap:.5rem}
+.form-label{font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:400}
+.form-input,.form-textarea{font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;color:var(--paper);background:transparent;border:none;border-bottom:1px solid var(--border-gold);padding:.75rem 0;outline:none;transition:border-color .3s;width:100%}
+.form-input:focus,.form-textarea:focus{border-color:var(--gold)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--muted-light)}
+.form-textarea{resize:none;min-height:120px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.form-submit{font-family:'Jost',sans-serif;font-size:.88rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);background:var(--gold);border:none;padding:1rem 2.5rem;cursor:pointer;transition:background .3s;align-self:flex-start;font-weight:500}
+.form-submit:hover{background:var(--gold-light)}
+
+/* FOOTER */
+footer{background:var(--surface);padding:2.5rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border-paper)}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--muted-light);letter-spacing:.08em}
+.footer-logo span{color:var(--gold)}
+.footer-copy{font-size:.85rem;color:var(--muted-light);font-weight:300;letter-spacing:.05em}
+.footer-social{display:flex;gap:1.5rem}
+.footer-social a{font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted-light);text-decoration:none;transition:color .3s}
+.footer-social a:hover{color:var(--gold)}
+
+/* AI CHAT */
+.ai-chat-btn{position:fixed;bottom:2rem;right:2rem;z-index:200;background:var(--gold);color:var(--ink);border:none;padding:.85rem 1.5rem;font-family:'Jost',sans-serif;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;font-weight:500;cursor:none;display:flex;align-items:center;gap:.6rem;box-shadow:0 4px 28px rgba(184,150,90,.35);transition:background .3s}
+.ai-chat-btn:hover{background:var(--gold-light)}
+.ai-pulse{width:6px;height:6px;background:var(--ink);border-radius:50%;animation:pulse-dot 2s ease infinite;flex-shrink:0}
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.5}}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(2rem);transition:opacity .9s cubic-bezier(.19,1,.22,1),transform .9s cubic-bezier(.19,1,.22,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  nav,nav.scrolled{padding-left:2rem;padding-right:2rem}
+  #hero{grid-template-columns:1fr}
+  .hero-image{min-height:50vw;order:-1}
+  .hero-image::after{background:linear-gradient(to top,var(--ink) 0%,transparent 50%)}
+  .hero-content{padding:3rem 2rem 5rem}
+  #about{grid-template-columns:1fr;padding:5rem 2rem;gap:3rem}
+  .sec{padding:5rem 2rem}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .service-card:nth-child(3n){border-right:1px solid var(--border-paper)}
+  .service-card:nth-child(2n){border-right:none}
+  .skills-layout{grid-template-columns:1fr;gap:3rem}
+  .work-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .why-item:nth-child(3n){border-right:1px solid var(--border-gold)}
+  .why-item:nth-child(2n){border-right:none}
+  .why-item:nth-last-child(-n+3){border-bottom:1px solid var(--border-gold)}
+  .why-item:nth-last-child(-n+2){border-bottom:none}
+  .testimonials-grid{grid-template-columns:1fr}
+  #contact{grid-template-columns:1fr;padding:5rem 2rem;gap:3rem}
+  footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem}
+  .nav-links{display:none}
+  .nav-toggle{display:block}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;inset:0;background:rgba(12,10,9,.97);align-items:center;justify-content:center;gap:2rem;z-index:99}
+  .nav-links.open a{font-size:1.25rem}
+  #skills{padding:5rem 2rem}
+}
+@media(max-width:600px){
+  .hero-stats{gap:1.5rem}
+  .hero-stat-num{font-size:2.2rem}
+  .form-row{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr}
+  .service-card:nth-child(n){border-right:none}
+  .why-grid{grid-template-columns:1fr}
+  .why-item:nth-child(n){border-right:none;border-bottom:1px solid var(--border-gold)}
+  .why-item:last-child{border-bottom:none}
+}
+
+/* ═══════════════════════════════════════════
+   PRELOADER / SPLASH SCREEN
+   ═══════════════════════════════════════════ */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Subtle grid texture behind the logo */
+#preloader::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* Radial glow behind logo */
+#preloader::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(ellipse at center, rgba(0,229,255,.07) 0%, rgba(125,42,232,.05) 50%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+#preloader-logo {
+  width: min(360px, 80vw);
+  height: min(360px, 80vw);
+  position: relative;
+  z-index: 2;
+}
+
+#preloader-status {
+  position: absolute;
+  bottom: 3rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 2;
+}
+
+.preloader-bar-bg {
+  width: min(220px, 55vw);
+  height: 1px;
+  background: rgba(255,255,255,.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.preloader-bar-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #00E5FF, #7D2AE8);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.preloader-pct {
+  font-family: 'Courier New', monospace;
+  font-size: .75rem;
+  letter-spacing: .15em;
+  color: rgba(255,255,255,.35);
+  min-width: 3ch;
+  text-align: right;
+}
+
+/* Preloader exit transition */
+#preloader.exit {
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   NAV LOGO SVG MARK (compact, inline)
+   ═══════════════════════════════════════════ */
+.nav-logo-mark {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
+  margin-right: .45rem;
+  flex-shrink: 0;
+  position: relative;
+  top: -1px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER LOGO MARK (large, centred)
+   ═══════════════════════════════════════════ */
+.footer-logo-mark {
+  display: block;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 1rem;
+}
+
+footer {
+  flex-direction: column;
+  gap: .5rem;
+  text-align: center;
+  padding: 3rem 4rem;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+@media(max-width:1100px) {
+  .footer-inner { flex-direction: column; gap: 1rem; }
+}
+
+/* ═══════════════════════════════════════════
+   FORM FEEDBACK & AI CHAT INTEGRATION
+   ═══════════════════════════════════════════ */
+.form-feedback {
+  padding: .875rem 1.25rem;
+  border-radius: 4px;
+  font-size: .85rem;
+  font-weight: 500;
+  margin-top: 1.5rem;
+  animation: fadeIn .4s ease;
+  font-family: 'Jost', sans-serif;
+  width: 100%;
+}
+.form-feedback--success {
+  background: rgba(34,197,94,.1);
+  border: 1px solid rgba(34,197,94,.25);
+  color: #4ade80;
+}
+.form-feedback--error {
+  background: rgba(239,68,68,.1);
+  border: 1px solid rgba(239,68,68,.25);
+  color: #f87171;
+}
+.form-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#ai-chat-window {
+  width: 380px;
+  height: 520px;
+  background: rgba(24, 20, 16, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: fixed;
+  bottom: 6rem;
+  right: 2rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--border-gold);
+  z-index: 9999;
+  font-family: 'Jost', sans-serif;
+}
+
+#ai-chat-window.hidden {
+  opacity: 0;
+  transform: translateY(30px) scale(0.9);
+  pointer-events: none;
+}
+
+.chat-header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1.25rem;
+  position: relative;
+  border-bottom: 1px solid var(--border-gold);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chat-header h4 {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--paper);
+}
+#close-chat {
+  background: rgba(184, 150, 90, 0.15);
+  border: none;
+  color: var(--paper);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.2s, color 0.2s;
+}
+#close-chat:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--surface);
+}
+.message {
+  max-width: 85%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  position: relative;
+}
+.message.assistant {
+  background: rgba(184,150,90,.08);
+  color: var(--paper);
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+  border-left: 3px solid var(--gold);
+}
+.message.user {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--ink);
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
+  box-shadow: 0 4px 15px rgba(184,150,90,0.15);
+}
+
+.typing-dots { display: flex; gap: 4px; padding: 5px 0; }
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  background: var(--muted-light);
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.chat-input-area {
+  display: flex;
+  padding: 1rem;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border-gold);
+  gap: 0.75rem;
+}
+#chat-user-input {
+  flex: 1;
+  border: 1px solid var(--border-gold);
+  padding: 0.625rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  background: rgba(245, 240, 232, 0.05);
+  color: var(--paper);
+  caret-color: var(--gold);
+  transition: all 0.2s;
+}
+#chat-user-input:focus {
+  border-color: var(--gold-light);
+  box-shadow: 0 0 0 2px rgba(184, 150, 90, 0.15);
+  background: rgba(245, 240, 232, 0.08);
+}
+.chat-input-area button {
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+.chat-input-area button:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+  #ai-chat-window {
+    width: calc(100vw - 2rem);
+    height: 400px;
+    bottom: 5.5rem;
+    right: 1rem;
+  }
+}
+</style>
 </head>
 <body>
-<!-- LOADER -->
-<div id="loader" class="loader">
-  <div class="loader-inner">
-    <div class="loader-ring"></div>
-    <div class="loader-text">ROBERT • THUO</div>
+
+<!-- ────── PRELOADER ────── -->
+<div id="preloader" aria-hidden="true">
+  <svg id="preloader-logo" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="pl-ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00E5FF"/>
+        <stop offset="100%" stop-color="#7D2AE8"/>
+      </linearGradient>
+      <linearGradient id="pl-textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#FFFFFF"/>
+        <stop offset="100%" stop-color="#4A90E2"/>
+      </linearGradient>
+    </defs>
+    <circle class="pl-ring" cx="200" cy="200" r="180" fill="none" stroke="url(#pl-ringGrad)" stroke-width="4"/>
+    <g class="pl-symbols">
+      <text class="pl-lbracket" x="95" y="182" fill="#00E5FF" font-family="Arial Black,sans-serif" font-size="100" font-weight="bold" style="filter:drop-shadow(0px 0px 8px rgba(0,229,255,0.6))">&lt;</text>
+      <text class="pl-slash" x="178" y="182" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-size="100" font-weight="bold">/</text>
+      <text class="pl-rbracket" x="238" y="182" fill="#7D2AE8" font-family="Arial Black,sans-serif" font-size="100" font-weight="bold" style="filter:drop-shadow(0px 0px 8px rgba(125,42,232,0.6))">&gt;</text>
+    </g>
+    <g class="pl-text-group">
+      <line class="pl-line-l" x1="90" y1="210" x2="140" y2="210" stroke="#00E5FF" stroke-width="3"/>
+      <text class="pl-the" x="155" y="218" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="24" font-weight="bold" letter-spacing="6">THE</text>
+      <line class="pl-line-r" x1="260" y1="210" x2="310" y2="210" stroke="#7D2AE8" stroke-width="3"/>
+      <text class="pl-c" x="70" y="280" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-size="64" font-weight="900">C</text>
+      <text class="pl-o" x="140" y="280" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-size="64" font-weight="900">O</text>
+      <text class="pl-d" x="215" y="280" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-size="64" font-weight="900">D</text>
+      <text class="pl-e" x="285" y="280" fill="url(#pl-textGrad)" font-family="Arial Black,sans-serif" font-size="64" font-weight="900">E</text>
+      <text class="pl-hub" x="120" y="325" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="24" font-weight="bold" letter-spacing="6">&lt; HUB &gt;</text>
+    </g>
+  </svg>
+  <div id="preloader-status">
+    <div class="preloader-bar-bg"><div class="preloader-bar-fill" id="plBar"></div></div>
+    <div class="preloader-pct" id="plPct">0%</div>
   </div>
 </div>
 
-<!-- PROGRESS BAR -->
-<div id="progress-bar" class="progress-bar"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-<!-- NAVIGATION -->
-<header id="navbar" class="navbar">
-  <nav class="nav-inner">
-    <a href="#top" class="nav-logo">
-      <img src="assets/the-code-hub-logo.png" alt="The Code Hub Logo" class="nav-logo-img" style="height: 2.5rem; width: 2.5rem; object-fit: contain; border-radius: 50%;" />
-      <span class="logo-name">The Code Hub</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-actions">
-      <a href="#contact" class="btn btn-primary btn-sm">Hire Me</a>
-      <button id="menu-toggle" class="menu-toggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-</header>
-
-<!-- MOBILE MENU -->
-<div id="mobile-menu" class="mobile-menu">
-  <ul>
+<!-- ────── NAV ────── -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <svg class="nav-logo-mark" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="nav-rg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00E5FF"/>
+          <stop offset="100%" stop-color="#7D2AE8"/>
+        </linearGradient>
+      </defs>
+      <circle cx="200" cy="200" r="178" fill="none" stroke="url(#nav-rg)" stroke-width="10"/>
+      <text x="95" y="235" fill="#00E5FF" font-family="Arial Black,sans-serif" font-size="130" font-weight="bold">&lt;</text>
+      <text x="185" y="235" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-size="130" font-weight="bold">/</text>
+      <text x="248" y="235" fill="#7D2AE8" font-family="Arial Black,sans-serif" font-size="130" font-weight="bold">&gt;</text>
+    </svg>
+    Robert <span>·</span> Thuo
+  </a>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#contact" class="btn btn-primary" style="margin-top:1rem;display:inline-flex;">Hire Me</a></li>
   </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ────── HERO ────── -->
+<section id="hero">
+  <div class="hero-bg-text" aria-hidden="true">RTN</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow reveal">
+      <span>Available for new projects &nbsp;·&nbsp; Nairobi, Kenya</span>
+    </div>
+    <h1 class="hero-title reveal d1">
+      I Design &amp;<br>Build <em>Digital</em><br>Experiences
+    </h1>
+    <p class="hero-subtitle reveal d2">
+      Multidisciplinary creative developer &amp; designer from Kenya — crafting cinematic websites, premium brands and high-performance products for ambitious teams.
+    </p>
+    <div class="hero-actions reveal d3">
+      <a href="#work" class="btn-primary">View Work</a>
+      <a href="#contact" class="btn-outline">✦ &nbsp;Hire Me</a>
+    </div>
+    <div class="hero-stats reveal d4">
+      <div>
+        <div class="hero-stat-num" data-count="40" data-suffix="+">0</div>
+        <div class="hero-stat-label">Projects</div>
+      </div>
+      <div>
+        <div class="hero-stat-num" data-count="4" data-suffix="y+">0</div>
+        <div class="hero-stat-label">Experience</div>
+      </div>
+      <div>
+        <div class="hero-stat-num" data-count="30" data-suffix="+">0</div>
+        <div class="hero-stat-label">Happy Clients</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="assets/portfolio-image.png" alt="Robert Thuo Njehu — Designer & Developer" loading="eager">
+  </div>
+</section>
+
+<!-- ────── MARQUEE ────── -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item">Web Design</span>
+    <span class="marquee-item">UI/UX Design</span>
+    <span class="marquee-item">Branding</span>
+    <span class="marquee-item">React Development</span>
+    <span class="marquee-item">Motion Design</span>
+    <span class="marquee-item">Webflow</span>
+    <span class="marquee-item">Creative Direction</span>
+    <span class="marquee-item">Next.js</span>
+    <span class="marquee-item">Full-Stack</span>
+    <span class="marquee-item">E-Commerce</span>
+    <span class="marquee-item">Web Design</span>
+    <span class="marquee-item">UI/UX Design</span>
+    <span class="marquee-item">Branding</span>
+    <span class="marquee-item">React Development</span>
+    <span class="marquee-item">Motion Design</span>
+    <span class="marquee-item">Webflow</span>
+    <span class="marquee-item">Creative Direction</span>
+    <span class="marquee-item">Next.js</span>
+    <span class="marquee-item">Full-Stack</span>
+    <span class="marquee-item">E-Commerce</span>
+  </div>
 </div>
 
-<!-- HERO -->
-<section id="top" class="hero">
-  <div class="hero-bg">
-    <img src="assets/luxury-hero.png" alt="" class="hero-bg-img"/>
-    <div class="hero-overlay"></div>
-    <div class="hero-grid-bg"></div>
-  </div>
-  <div class="hero-content container">
-    <div class="hero-text">
-      <div class="reveal-up d1">
-        <span class="badge-status">
-          <span class="pulse-dot"><span></span><span></span></span>
-          Available for new projects · Nairobi, Kenya
-        </span>
-      </div>
-      <h1 class="hero-title">
-        <span class="reveal-up d2">I Design &</span>
-        <span class="reveal-up d3">Build</span>
-        <br/>
-        <span class="reveal-up d4 text-gradient">Digital Experiences</span>
-      </h1>
-      <p class="hero-desc reveal-up d5">I'm <strong>Robert Thuo Njehu</strong>, a multidisciplinary creative developer & designer from Kenya, crafting cinematic websites, premium brands and high-performance products for ambitious teams.</p>
-      <div class="hero-cta reveal-up d6">
-        <a href="#work" class="btn btn-primary btn-lg">View My Work <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-        <a href="#contact" class="btn btn-glass btn-lg">✦ Hire Me</a>
-      </div>
-      <div class="hero-stats reveal-up d7">
-        <div class="stat"><span class="stat-num" data-target="60">0</span>+<div class="stat-label">Projects</div></div>
-        <div class="stat"><span class="stat-num" data-target="5">0</span>y+<div class="stat-label">Experience</div></div>
-        <div class="stat"><span class="stat-num" data-target="30">0</span>+<div class="stat-label">Happy Clients</div></div>
-      </div>
-    </div>
-    <div class="hero-portrait reveal-up d5">
-      <div class="portrait-glow"></div>
-      <div class="portrait-frame">
-        <img src="assets/portfolio-image.png" alt="Robert Thuo Njehu" width="500" height="620"/>
-        <div class="portrait-overlay">
-          <div class="portrait-info">
-            <span class="portrait-label">Currently</span>
-            <span class="portrait-value">Crafting Experiences</span>
-          </div>
-          <span class="portrait-icon">✦</span>
-        </div>
-      </div>
+<!-- ────── ABOUT ────── -->
+<section id="about">
+  <div class="about-image reveal">
+    <img src="assets/portfolio-image.png" alt="Robert Thuo Njehu">
+    <div class="about-tags">
+      <span class="about-tag">Responsive Websites</span>
+      <span class="about-tag">UI/UX</span>
+      <span class="about-tag">Brand Identity</span>
+      <span class="about-tag">Motion Design</span>
+      <span class="about-tag">Performance</span>
     </div>
   </div>
-  <!-- Marquee -->
-  <div class="marquee-strip">
-    <div class="marquee-track">
-      <div class="marquee-group">
-        <span>Web Design</span><span class="accent">✦</span>
-        <span>UI/UX</span><span class="accent">✦</span>
-        <span>Branding</span><span class="accent">✦</span>
-        <span>React Development</span><span class="accent">✦</span>
-        <span>Motion</span><span class="accent">✦</span>
-        <span>Webflow</span><span class="accent">✦</span>
-        <span>Creative Direction</span><span class="accent">✦</span>
-      </div>
-      <div class="marquee-group" aria-hidden="true">
-        <span>Web Design</span><span class="accent">✦</span>
-        <span>UI/UX</span><span class="accent">✦</span>
-        <span>Branding</span><span class="accent">✦</span>
-        <span>React Development</span><span class="accent">✦</span>
-        <span>Motion</span><span class="accent">✦</span>
-        <span>Webflow</span><span class="accent">✦</span>
-        <span>Creative Direction</span><span class="accent">✦</span>
-      </div>
+  <div>
+    <div class="section-label reveal">
+      <span>About</span>
+      <span class="section-num">01</span>
+    </div>
+    <h2 class="section-title reveal d1">Where design<br>meets <em>engineering</em></h2>
+    <p class="about-body reveal d2">I help <strong>brands, startups and businesses</strong> create beautiful, high-converting digital experiences through the rare blend of design intuition and engineering craft.</p>
+    <p class="about-body reveal d3">From responsive websites and modern UI/UX to brand identity, motion design and interactive web experiences. I obsess over the details that turn a project into a product people love.</p>
+    <p class="about-body reveal d4">Every build is engineered for <em>performance</em>, accessibility and longevity — so your product feels premium today and scales tomorrow.</p>
+    <div style="margin-top:2.5rem" class="reveal d5">
+      <a href="#contact" class="btn-primary">Start a Project</a>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="section">
-  <div class="container">
-    <div class="section-header anim-up">
-      <span class="section-badge">About</span>
-      <h2 class="section-title"><span class="text-gradient">Where design meets engineering</span></h2>
+<!-- ────── SERVICES ────── -->
+<section id="services" class="sec sec-dark">
+  <div class="section-label reveal">
+    <span>Services</span>
+    <span class="section-num">02</span>
+  </div>
+  <h2 class="section-title on-dark reveal d1">What I do <em>best</em></h2>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-title">Website Design</div>
+      <div class="service-desc">Award-grade marketing sites engineered to convert visitors into loyal customers.</div>
     </div>
-    <div class="about-grid">
-      <div class="about-text anim-up">
-        <p>I help <strong>brands, startups and businesses</strong> create beautiful, high-converting digital experiences through the rare blend of design intuition and engineering craft.</p>
-        <p>From responsive websites and modern UI/UX to brand identity, motion design and interactive web experiences. I obsess over the details that turn a project into a product people love.</p>
-        <p>Every build is engineered for <em class="text-accent">performance</em>, accessibility and longevity, so your product feels premium today and scales tomorrow.</p>
-      </div>
-      <div class="about-skills anim-up">
-        <div class="skill-chip"><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span> Responsive Websites</div>
-        <div class="skill-chip"><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></span> Modern UI/UX</div>
-        <div class="skill-chip"><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg></span> Brand Identity</div>
-        <div class="skill-chip"><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></span> Motion Design</div>
-        <div class="skill-chip"><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></span> Interactive Web</div>
-        <div class="skill-chip"><span class="skill-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"></path></svg></span> Performance</div>
-      </div>
+    <div class="service-card reveal d1">
+      <div class="service-num">02</div>
+      <div class="service-title">Full Stack Development</div>
+      <div class="service-desc">End-to-end products built with React, Next.js and Node.js.</div>
+    </div>
+    <div class="service-card reveal d2">
+      <div class="service-num">03</div>
+      <div class="service-title">UI/UX Design</div>
+      <div class="service-desc">Research-led interfaces in Figma with handoff-ready specifications.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <div class="service-title">Branding &amp; Graphics</div>
+      <div class="service-desc">Logos, identities and visual systems with distinct, enduring personality.</div>
+    </div>
+    <div class="service-card reveal d1">
+      <div class="service-num">05</div>
+      <div class="service-title">Landing Pages</div>
+      <div class="service-desc">High-converting one-pagers shipped in days, not weeks.</div>
+    </div>
+    <div class="service-card reveal d2">
+      <div class="service-num">06</div>
+      <div class="service-title">E-Commerce</div>
+      <div class="service-desc">Shopify, Webflow and headless storefronts engineered to scale.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">07</div>
+      <div class="service-title">Portfolio Websites</div>
+      <div class="service-desc">Cinematic portfolios for creatives, freelancers and agencies.</div>
+    </div>
+    <div class="service-card reveal d1">
+      <div class="service-num">08</div>
+      <div class="service-title">Business Websites</div>
+      <div class="service-desc">Trust-building sites for SMBs with SEO and analytics baked in.</div>
+    </div>
+    <div class="service-card reveal d2">
+      <div class="service-num">09</div>
+      <div class="service-title">Mobile Responsive</div>
+      <div class="service-desc">Pixel-perfect across every device — mobile-first by default.</div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section id="services" class="section section-alt">
-  <div class="container">
-    <div class="section-header anim-up">
-      <span class="section-badge">Services</span>
-      <h2 class="section-title"><span class="text-gradient">What I do best</span></h2>
-      <p class="section-sub">A complete creative & technical toolkit under one roof.</p>
-    </div>
-    <div class="services-grid">
-      <article class="service-card glass-card anim-up">
-        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
-        <h3>Website Design</h3>
-        <p>Award-grade marketing sites that convert visitors into customers.</p>
-      </article>
-      <article class="service-card glass-card anim-up">
-        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
-        <h3>Full Stack Development</h3>
-        <p>End-to-end products built with React, Next.js and Node.</p>
-      </article>
-      <article class="service-card glass-card anim-up">
-        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
-        <h3>UI/UX Design</h3>
-        <p>Research-led interfaces designed in Figma with handoff-ready specs.</p>
-      </article>
-      <article class="service-card glass-card anim-up">
-        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg></div>
-        <h3>Branding & Graphics</h3>
-        <p>Logos, identities and visual systems with personality.</p>
-      </article>
-      <article class="service-card glass-card anim-up">
-        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"></path></svg></div>
-        <h3>Landing Pages</h3>
-        <p>High-converting one-pagers shipped in days, not weeks.</p>
-      </article>
-      <article class="service-card glass-card anim-up">
-        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></div>
-        <h3>E-commerce Development</h3>
-        <p>Shopify, Webflow and headless storefronts that scale.</p>
-      </article>
-      <article class="service-card glass-card anim-up">
-        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
-        <h3>Portfolio Websites</h3>
-        <p>Cinematic portfolios for creatives, freelancers and agencies.</p>
-      </article>
-      <article class="service-card glass-card anim-up">
-        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M9 8h1"></path><path d="M9 12h1"></path><path d="M9 16h1"></path><path d="M14 8h1"></path><path d="M14 12h1"></path><path d="M14 16h1"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg></div>
-        <h3>Business Websites</h3>
-        <p>Trust-building sites for SMBs with SEO and analytics baked in.</p>
-      </article>
-      <article class="service-card glass-card anim-up">
-        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></div>
-        <h3>Mobile Responsive Design</h3>
-        <p>Pixel-perfect across every device, mobile-first by default.</p>
-      </article>
-    </div>
+<!-- ────── SKILLS ────── -->
+<section id="skills" class="sec sec-light">
+  <div class="section-label reveal">
+    <span>Toolkit</span>
+    <span class="section-num">03</span>
   </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills" class="section">
-  <div class="container">
-    <div class="section-header anim-up">
-      <span class="section-badge">Toolkit</span>
-      <h2 class="section-title"><span class="text-gradient">Skills & technologies</span></h2>
-      <p class="section-sub">A modern stack honed across years of shipping production work.</p>
-    </div>
-    <div class="skills-pills anim-up">
-      <span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">JavaScript</span>
-      <span class="pill">TypeScript</span><span class="pill">React</span><span class="pill">Next.js</span>
-      <span class="pill">Node.js</span><span class="pill">Tailwind CSS</span><span class="pill">Firebase</span>
-      <span class="pill">MongoDB</span><span class="pill">Figma</span><span class="pill">Adobe Photoshop</span>
-      <span class="pill">Adobe Illustrator</span>
+  <h2 class="section-title reveal d1">Skills &amp;<br><em>technologies</em></h2>
+  <div class="skills-layout">
+    <div class="skills-intro">
+      <p class="reveal d2">A modern stack honed across years of shipping production work. Each technology chosen with purpose — to build fast, maintainable, and beautiful.</p>
+      <p class="reveal d3">From pixel-level design decisions in Figma to deployed cloud infrastructure — I operate across the full spectrum of digital craft.</p>
     </div>
     <div class="skills-bars">
-      <div class="skill-bar anim-up" data-pct="100"><div class="skill-bar-head"><span>HTML</span><span class="pct">100%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
-      <div class="skill-bar anim-up" data-pct="96"><div class="skill-bar-head"><span>CSS</span><span class="pct">96%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
-      <div class="skill-bar anim-up" data-pct="94"><div class="skill-bar-head"><span>JavaScript</span><span class="pct">94%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
-      <div class="skill-bar anim-up" data-pct="90"><div class="skill-bar-head"><span>TypeScript</span><span class="pct">90%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
-      <div class="skill-bar anim-up" data-pct="95"><div class="skill-bar-head"><span>React</span><span class="pct">95%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
-      <div class="skill-bar anim-up" data-pct="90"><div class="skill-bar-head"><span>Next.js</span><span class="pct">90%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
-      <div class="skill-bar anim-up" data-pct="85"><div class="skill-bar-head"><span>Node.js</span><span class="pct">85%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
-      <div class="skill-bar anim-up" data-pct="96"><div class="skill-bar-head"><span>Tailwind CSS</span><span class="pct">96%</span></div><div class="bar-track"><div class="bar-fill"></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- WORK -->
-<section id="work" class="section section-alt">
-  <div class="container">
-    <div class="section-header anim-up">
-      <span class="section-badge">Selected Work</span>
-      <h2 class="section-title"><span class="text-gradient">Recent projects</span></h2>
-      <p class="section-sub">A peek into the brands and products I've shaped.</p>
-    </div>
-    <div class="work-grid">
-      <article class="work-card glass-card anim-up">
-        <a href="https://www.shopzetu.com/" target="_blank" rel="noopener noreferrer" style="display: contents;">
-          <div class="work-thumb" style="background: url('https://cdn.shopify.com/s/files/1/0621/5162/2875/collections/we_outside.jpg') center/cover; position: relative;">
-            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.9) 100%); border-radius: inherit; z-index: 0;"></div>
-            <span class="work-tag" style="z-index: 1;">E-commerce · Shopify</span>
-            <div class="work-bottom" style="z-index: 1;"><h3>Shop Zetu</h3></div>
-          </div>
-          <div class="work-meta"><p>Kenya's premier multi-brand fashion & beauty e-commerce platform.</p><span class="work-arrow">↗</span></div>
-        </a>
-      </article>
-      <article class="work-card glass-card anim-up">
-        <a href="https://aanddstore.co.ke/" target="_blank" rel="noopener noreferrer" style="display: contents;">
-          <div class="work-thumb" style="background: url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1000&auto=format&fit=crop') center/cover; position: relative;">
-            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.9) 100%); border-radius: inherit; z-index: 0;"></div>
-            <span class="work-tag" style="z-index: 1;">E-commerce · Hardware</span>
-            <div class="work-bottom" style="z-index: 1;"><h3>A&D Store Kenya</h3></div>
-          </div>
-          <div class="work-meta"><p>Kenya's trusted online supplier for hardware and premium building materials.</p><span class="work-arrow">↗</span></div>
-        </a>
-      </article>
-      <article class="work-card glass-card anim-up">
-        <a href="#work" style="display: contents;">
-          <div class="work-thumb" style="background: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1000&auto=format&fit=crop') center/cover; position: relative;">
-            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.9) 100%); border-radius: inherit; z-index: 0;"></div>
-            <span class="work-tag" style="z-index: 1;">Mobile · UI/UX</span>
-            <div class="work-bottom" style="z-index: 1;"><h3>Mobile Commerce Engine</h3></div>
-          </div>
-          <div class="work-meta"><p>A high-fidelity mobile storefront engineered for responsive precision, perfect element alignment, and a premium user experience.</p><span class="work-arrow">↗</span></div>
-        </a>
-      </article>
-      <article class="work-card glass-card anim-up">
-        <a href="#work" style="display: contents;">
-          <div class="work-thumb" style="background: url('https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=1000&auto=format&fit=crop') center/cover; position: relative;">
-            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.9) 100%); border-radius: inherit; z-index: 0;"></div>
-            <span class="work-tag" style="z-index: 1;">E-commerce · Security</span>
-            <div class="work-bottom" style="z-index: 1;"><h3>Puzzle & Play</h3></div>
-          </div>
-          <div class="work-meta"><p>A production-ready storefront with Supabase RLS integration and mobile-optimized category grids.</p><span class="work-arrow">↗</span></div>
-        </a>
-      </article>
-      <article class="work-card glass-card anim-up">
-        <a href="#work" style="display: contents;">
-          <div class="work-thumb" style="background: url('https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=1000&auto=format&fit=crop') center/cover; position: relative;">
-            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.9) 100%); border-radius: inherit; z-index: 0;"></div>
-            <span class="work-tag" style="z-index: 1;">SaaS · UI/UX</span>
-            <div class="work-bottom" style="z-index: 1;"><h3>Store Admin Portal</h3></div>
-          </div>
-          <div class="work-meta"><p>A secure, role-based admin dashboard built on Vercel with real-time inventory and data management.</p><span class="work-arrow">↗</span></div>
-        </a>
-      </article>
-      <article class="work-card glass-card anim-up">
-        <a href="#work" style="display: contents;">
-          <div class="work-thumb" style="background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop') center/cover; position: relative;">
-            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.9) 100%); border-radius: inherit; z-index: 0;"></div>
-            <span class="work-tag" style="z-index: 1;">Product · Web</span>
-            <div class="work-bottom" style="z-index: 1;"><h3>Kariuki Enterprises</h3></div>
-          </div>
-          <div class="work-meta"><p>A standardized, high-performance product catalog with uniform grid alignments and dynamic filtering.</p><span class="work-arrow">↗</span></div>
-        </a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- WHY ME -->
-<section class="section">
-  <div class="container">
-    <div class="section-header anim-up">
-      <span class="section-badge">Why work with me</span>
-      <h2 class="section-title"><span class="text-gradient">Built different, on purpose</span></h2>
-    </div>
-    <div class="bento-grid">
-      <div class="bento-card bento-lg glass-card anim-up">
-        <span class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
-        <h3>Clean Code</h3>
-        <p>Maintainable, typed, well-documented.</p>
-        <div class="bento-stats">
-          <div><span class="bento-num" data-target="60">0</span>+<div class="stat-label">Projects</div></div>
-          <div><span class="bento-num" data-target="30">0</span>+<div class="stat-label">Clients</div></div>
-          <div><span class="bento-num" data-target="100">0</span>%<div class="stat-label">Satisfaction</div></div>
-        </div>
+      <div class="skill-item reveal">
+        <div class="skill-header"><span class="skill-name">HTML / CSS</span><span class="skill-pct">100%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="1"></div></div>
       </div>
-      <div class="bento-card glass-card anim-up"><span class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></span><h3>Fast Delivery</h3><p>Sprint-ready timelines, no surprises.</p></div>
-      <div class="bento-card glass-card anim-up"><span class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></span><h3>Modern Designs</h3><p>Fresh, on-trend, never templated.</p></div>
-      <div class="bento-card glass-card anim-up"><span class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span><h3>Attention to Detail</h3><p>Polish that competitors skip.</p></div>
-      <div class="bento-card glass-card anim-up"><span class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span><h3>Mobile Optimization</h3><p>Flawless on every screen size.</p></div>
-      <div class="bento-card glass-card anim-up"><span class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span><h3>SEO-Friendly</h3><p>Built to rank from day one.</p></div>
-      <div class="bento-card glass-card anim-up"><span class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span><h3>Creative Problem Solving</h3><p>Strategic thinking baked in.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-header anim-up">
-      <span class="section-badge">Kind words</span>
-      <h2 class="section-title"><span class="text-gradient">What clients say</span></h2>
-    </div>
-    <div class="testimonials-grid">
-      <figure class="testimonial glass-card anim-up">
-        <blockquote>"Robert delivered beyond what we imagined. Our conversion rate jumped 38% in the first month after the rebrand."</blockquote>
-        <figcaption>
-          <div class="avatar">A</div>
-          <div><strong>Amina Khalid</strong><br/><span>Founder, Nova Fashion</span></div>
-        </figcaption>
-      </figure>
-      <figure class="testimonial glass-card anim-up">
-        <blockquote>"Easily the best designer-developer hybrid we've worked with. Pixel-perfect, fast, and a joy to collaborate with."</blockquote>
-        <figcaption>
-          <div class="avatar">D</div>
-          <div><strong>Daniel Mwangi</strong><br/><span>CEO, Pulse Fintech</span></div>
-        </figcaption>
-      </figure>
-      <figure class="testimonial glass-card anim-up">
-        <blockquote>"He gets product. Strategic thinking, beautiful execution, and shipped on time. We'll keep hiring him."</blockquote>
-        <figcaption>
-          <div class="avatar">S</div>
-          <div><strong>Sara Otieno</strong><br/><span>Head of Design, Zenith</span></div>
-        </figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="section">
-  <div class="container">
-    <div class="section-header anim-up">
-      <span class="section-badge">Let's talk</span>
-      <h2 class="section-title"><span class="text-gradient">Have a project in mind?</span></h2>
-      <p class="section-sub">I'm taking on select work this quarter. Let's craft something memorable.</p>
-    </div>
-    <div class="contact-grid">
-      <div class="contact-info anim-up">
-        <div class="contact-card glass-card">
-          <span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span>
-          <div><span class="contact-label">Phone</span><strong>+254 713 911 222</strong></div>
-        </div>
-        <div class="contact-card glass-card">
-          <span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span>
-          <div><span class="contact-label">Email</span><strong>bob.designflow@gmail.com</strong></div>
-        </div>
-        <a href="https://wa.me/254713911222" target="_blank" rel="noreferrer" class="contact-card contact-wa btn-primary">
-          <span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></span>
-          <div><span class="contact-label">Chat now</span><strong>Message me on WhatsApp</strong></div>
-          <span class="wa-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
-        </a>
-        <div class="social-row glass-card">
-          <span>Find me online</span>
-          <div class="social-icons">
-            <a href="#" class="social-icon" aria-label="LinkedIn">in</a>
-            <a href="#" class="social-icon" aria-label="Twitter">𝕏</a>
-            <a href="#" class="social-icon" aria-label="Instagram">◻</a>
-            <a href="#" class="social-icon" aria-label="GitHub">⌘</a>
-          </div>
-        </div>
+      <div class="skill-item reveal d1">
+        <div class="skill-header"><span class="skill-name">React / Next.js</span><span class="skill-pct">95%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="0.95"></div></div>
       </div>
-      <form id="contactForm" class="contact-form glass-card anim-up">
-        <div class="form-row">
-          <label><span>Name</span><input id="name" name="name" type="text" required placeholder="Your name"/></label>
-          <label><span>Email</span><input id="email" name="email" type="email" required placeholder="you@brand.com"/></label>
-        </div>
-        <label><span>Subject</span><input id="subject" name="subject" required placeholder="What's this about?"/></label>
-        <label><span>Message</span><textarea id="message" name="message" required rows="5" placeholder="Tell me about your project, timeline and goals…"></textarea></label>
-        <div id="form-feedback" class="form-feedback" style="display:none;"></div>
-        <button id="form-submit-btn" type="submit" class="btn btn-primary btn-lg btn-full">
-          Send Message
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </button>
-      </form>
-
-      <script>
-        document.getElementById('contactForm').addEventListener('submit', async function(e) {
-          e.preventDefault();
-          var btn = document.getElementById('form-submit-btn');
-          var feedback = document.getElementById('form-feedback');
-
-          var formData = {
-            name:    document.getElementById('name').value,
-            email:   document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
-          };
-
-          btn.disabled = true;
-          btn.textContent = 'Sending…';
-          feedback.style.display = 'none';
-
-          try {
-            var response = await fetch('https://formspree.io/f/xaqvrwgj', {
-              method: 'POST',
-              headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              body: JSON.stringify(formData)
-            });
-
-            if (response.ok) {
-              feedback.textContent = '✓ Message sent! I\'ll get back to you shortly.';
-              feedback.className = 'form-feedback form-feedback--success';
-              feedback.style.display = 'block';
-              document.getElementById('contactForm').reset();
-            } else {
-              var result = await response.json();
-              feedback.textContent = '✗ ' + (result.error || 'Something went wrong. Please try again.');
-              feedback.className = 'form-feedback form-feedback--error';
-              feedback.style.display = 'block';
-            }
-          } catch (err) {
-            feedback.textContent = '✗ Could not send message. Check your connection and try again.';
-            feedback.className = 'form-feedback form-feedback--error';
-            feedback.style.display = 'block';
-          }
-
-          btn.disabled = false;
-          btn.innerHTML = 'Send Message <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
-        });
-      </script>
+      <div class="skill-item reveal d2">
+        <div class="skill-header"><span class="skill-name">JavaScript / TypeScript</span><span class="skill-pct">94%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="0.94"></div></div>
+      </div>
+      <div class="skill-item reveal d3">
+        <div class="skill-header"><span class="skill-name">Tailwind CSS</span><span class="skill-pct">96%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="0.96"></div></div>
+      </div>
+      <div class="skill-item reveal d4">
+        <div class="skill-header"><span class="skill-name">Node.js</span><span class="skill-pct">85%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="0.85"></div></div>
+      </div>
+      <div class="skill-item reveal d5">
+        <div class="skill-header"><span class="skill-name">Figma / Adobe Suite</span><span class="skill-pct">92%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="0.92"></div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <span>© 2026 Robert Thuo Njehu</span>
-    <span>Designed & Developed by <strong class="text-gradient">Robert Thuo Njehu</strong></span>
+<!-- ────── WORK ────── -->
+<section id="work" class="sec sec-dark">
+  <div class="section-label reveal">
+    <span>Selected Work</span>
+    <span class="section-num">04</span>
+  </div>
+  <h2 class="section-title on-dark reveal d1">Recent <em>projects</em></h2>
+  <div class="work-grid">
+
+    <div class="work-card reveal">
+      <div class="work-card-bg work-bg-1">
+        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><circle cx="300" cy="225" r="180" fill="none" stroke="#B8965A" stroke-width=".7"/><circle cx="300" cy="225" r="120" fill="none" stroke="#B8965A" stroke-width=".5"/><circle cx="300" cy="225" r="60" fill="none" stroke="#B8965A" stroke-width=".5"/><line x1="0" y1="225" x2="600" y2="225" stroke="#B8965A" stroke-width=".4"/><line x1="300" y1="0" x2="300" y2="450" stroke="#B8965A" stroke-width=".4"/></svg>
+      </div>
+      <div class="work-card-overlay"></div>
+      <div class="work-card-content">
+        <div class="work-tags"><span class="work-tag">E-Commerce</span><span class="work-tag">Shopify</span></div>
+        <div class="work-title">Shop Zetu</div>
+        <div class="work-subtitle">Kenya's premier multi-brand fashion &amp; beauty platform</div>
+        <a href="https://www.shopzetu.com/" target="_blank" class="work-link">View Live Project →</a>
+      </div>
+    </div>
+
+    <div class="work-card reveal d1">
+      <div class="work-card-bg work-bg-2">
+        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><rect x="50" y="50" width="500" height="350" fill="none" stroke="#B8965A" stroke-width=".7"/><rect x="100" y="100" width="400" height="250" fill="none" stroke="#B8965A" stroke-width=".5"/><rect x="150" y="150" width="300" height="150" fill="none" stroke="#B8965A" stroke-width=".5"/><line x1="50" y1="50" x2="550" y2="400" stroke="#B8965A" stroke-width=".4"/><line x1="550" y1="50" x2="50" y2="400" stroke="#B8965A" stroke-width=".4"/></svg>
+      </div>
+      <div class="work-card-overlay"></div>
+      <div class="work-card-content">
+        <div class="work-tags"><span class="work-tag">E-Commerce</span><span class="work-tag">Hardware</span></div>
+        <div class="work-title">A&amp;D Store Kenya</div>
+        <div class="work-subtitle">Trusted online supplier for hardware &amp; premium building materials</div>
+        <a href="https://aanddstore.co.ke/" target="_blank" class="work-link">View Live Project →</a>
+      </div>
+    </div>
+
+    <div class="work-card reveal">
+      <div class="work-card-bg work-bg-3">
+        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><polygon points="300,50 550,400 50,400" fill="none" stroke="#B8965A" stroke-width=".7"/><polygon points="300,130 480,370 120,370" fill="none" stroke="#B8965A" stroke-width=".5"/><polygon points="300,210 410,340 190,340" fill="none" stroke="#B8965A" stroke-width=".5"/><circle cx="300" cy="275" r="4" fill="#B8965A"/></svg>
+      </div>
+      <div class="work-card-overlay"></div>
+      <div class="work-card-content">
+        <div class="work-tags"><span class="work-tag">Mobile</span><span class="work-tag">UI/UX</span></div>
+        <div class="work-title">Mobile Commerce Engine</div>
+        <div class="work-subtitle">High-fidelity storefront engineered for premium UX &amp; precision alignment</div>
+        <a href="#work" class="work-link">Case Study →</a>
+      </div>
+    </div>
+
+    <div class="work-card reveal d1">
+      <div class="work-card-bg work-bg-4">
+        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><path d="M50,225 Q150,50 300,225 Q450,400 550,225" fill="none" stroke="#B8965A" stroke-width=".7"/><path d="M50,225 Q150,100 300,225 Q450,350 550,225" fill="none" stroke="#B8965A" stroke-width=".5"/><path d="M50,225 Q150,150 300,225 Q450,300 550,225" fill="none" stroke="#B8965A" stroke-width=".5"/><circle cx="300" cy="225" r="8" fill="#B8965A" opacity=".5"/></svg>
+      </div>
+      <div class="work-card-overlay"></div>
+      <div class="work-card-content">
+        <div class="work-tags"><span class="work-tag">E-Commerce</span><span class="work-tag">Supabase</span></div>
+        <div class="work-title">Puzzle &amp; Play</div>
+        <div class="work-subtitle">Production storefront with Supabase RLS &amp; mobile-optimised category grids</div>
+        <a href="#work" class="work-link">Case Study →</a>
+      </div>
+    </div>
+
+    <div class="work-card reveal">
+      <div class="work-card-bg work-bg-5">
+        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><rect x="80" y="80" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".7"/><rect x="250" y="80" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".7"/><rect x="420" y="80" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".7"/><rect x="80" y="290" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".5"/><rect x="250" y="290" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".5"/><rect x="420" y="290" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".5"/><line x1="130" y1="160" x2="130" y2="290" stroke="#B8965A" stroke-width=".3"/><line x1="300" y1="160" x2="300" y2="290" stroke="#B8965A" stroke-width=".3"/><line x1="470" y1="160" x2="470" y2="290" stroke="#B8965A" stroke-width=".3"/></svg>
+      </div>
+      <div class="work-card-overlay"></div>
+      <div class="work-card-content">
+        <div class="work-tags"><span class="work-tag">SaaS</span><span class="work-tag">Dashboard</span></div>
+        <div class="work-title">Store Admin Portal</div>
+        <div class="work-subtitle">Secure role-based dashboard with real-time inventory management</div>
+        <a href="#work" class="work-link">Case Study →</a>
+      </div>
+    </div>
+
+    <div class="work-card reveal d1">
+      <div class="work-card-bg work-bg-6">
+        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><line x1="50" y1="400" x2="550" y2="80" stroke="#B8965A" stroke-width=".7"/><line x1="50" y1="350" x2="550" y2="140" stroke="#B8965A" stroke-width=".4"/><line x1="50" y1="300" x2="550" y2="200" stroke="#B8965A" stroke-width=".4"/><circle cx="160" cy="340" r="5" fill="#B8965A"/><circle cx="290" cy="255" r="5" fill="#B8965A"/><circle cx="410" cy="180" r="5" fill="#B8965A"/><circle cx="520" cy="110" r="5" fill="#B8965A"/></svg>
+      </div>
+      <div class="work-card-overlay"></div>
+      <div class="work-card-content">
+        <div class="work-tags"><span class="work-tag">Product</span><span class="work-tag">Web</span></div>
+        <div class="work-title">Kariuki Enterprises</div>
+        <div class="work-subtitle">Standardised product catalog with dynamic filtering &amp; uniform grid alignment</div>
+        <a href="#work" class="work-link">Case Study →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ────── WHY ME ────── -->
+<section id="why" class="sec sec-light">
+  <div class="section-label reveal">
+    <span>Why Choose Me</span>
+    <span class="section-num">05</span>
+  </div>
+  <h2 class="section-title reveal d1">Built different,<br><em>on purpose</em></h2>
+  <div class="why-grid">
+    <div class="why-item reveal">
+      <div class="why-icon"><div class="why-icon-inner"></div></div>
+      <div class="why-title">Clean Code</div>
+      <div class="why-desc">Maintainable, typed, well-documented. Every line written with the next developer in mind.</div>
+    </div>
+    <div class="why-item reveal d1">
+      <div class="why-icon"><div class="why-icon-inner"></div></div>
+      <div class="why-title">Fast Delivery</div>
+      <div class="why-desc">Sprint-ready timelines, no surprises. Shipped on time, every single time.</div>
+    </div>
+    <div class="why-item reveal d2">
+      <div class="why-icon"><div class="why-icon-inner"></div></div>
+      <div class="why-title">Modern Designs</div>
+      <div class="why-desc">Fresh, on-trend, never templated. Each project a unique expression of your brand.</div>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-icon"><div class="why-icon-inner"></div></div>
+      <div class="why-title">Attention to Detail</div>
+      <div class="why-desc">Polish that competitors skip. The micro-moments that separate good from exceptional.</div>
+    </div>
+    <div class="why-item reveal d1">
+      <div class="why-icon"><div class="why-icon-inner"></div></div>
+      <div class="why-title">Mobile-First</div>
+      <div class="why-desc">Flawless on every screen size. Pixel-perfect from handset to ultrawide.</div>
+    </div>
+    <div class="why-item reveal d2">
+      <div class="why-icon"><div class="why-icon-inner"></div></div>
+      <div class="why-title">SEO-Friendly</div>
+      <div class="why-desc">Built to rank from day one. Performance, semantics and structure baked in by default.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ────── TESTIMONIALS ────── -->
+<section id="testimonials" class="sec sec-dark">
+  <div class="section-label reveal">
+    <span>Testimonials</span>
+    <span class="section-num">06</span>
+  </div>
+  <h2 class="section-title on-dark reveal d1">What clients <em>say</em></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-text">"Robert delivered beyond what we imagined. Our conversion rate jumped 38% in the first month after the rebrand."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">AK</div>
+        <div><div class="testimonial-name">Amina Khalid</div><div class="testimonial-role">Founder, Nova Fashion</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal d1">
+      <div class="testimonial-text">"Easily the best designer-developer hybrid we've worked with. Pixel-perfect, fast, and a joy to collaborate with."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">DM</div>
+        <div><div class="testimonial-name">Daniel Mwangi</div><div class="testimonial-role">CEO, Pulse Fintech</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal d2">
+      <div class="testimonial-text">"He gets product. Strategic thinking, beautiful execution, and shipped on time. We'll keep hiring him."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">SO</div>
+        <div><div class="testimonial-name">Sara Otieno</div><div class="testimonial-role">Head of Design, Zenith</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────── CONTACT ────── -->
+<section id="contact">
+  <div>
+    <div class="section-label reveal">
+      <span>Let's Talk</span>
+      <span class="section-num">07</span>
+    </div>
+    <h2 class="section-title on-dark reveal d1">Have a project<br>in <em>mind?</em></h2>
+    <p class="contact-desc reveal d2">I'm taking on select work this quarter. Let's craft something memorable together.</p>
+    <div class="contact-detail reveal d3">
+      <div class="contact-item">
+        <span class="contact-item-label">Phone</span>
+        <span class="contact-item-value"><a href="tel:+254713911222">+254 713 911 222</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Email</span>
+        <span class="contact-item-value"><a href="mailto:bob.designflow@gmail.com">bob.designflow@gmail.com</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">WhatsApp</span>
+        <span class="contact-item-value"><a href="https://wa.me/254713911222" target="_blank">Message directly →</a></span>
+      </div>
+    </div>
+  </div>
+  <form id="contactForm" class="contact-form reveal d2">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" id="name" name="name" class="form-input" required placeholder="Your full name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" id="email" name="email" class="form-input" required placeholder="your@email.com">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Subject</label>
+      <input type="text" id="subject" name="subject" class="form-input" required placeholder="Project type or inquiry">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <textarea id="message" name="message" class="form-textarea" required placeholder="Tell me about your project…"></textarea>
+    </div>
+    <div id="form-feedback" class="form-feedback" style="display:none;"></div>
+    <button type="submit" class="form-submit" id="formSubmit">Send Message</button>
+  </form>
+</section>
+
+<!-- ────── FOOTER ────── -->
+<footer>
+  <svg class="footer-logo-mark" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="ft-rg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#7D2AE8" stop-opacity="0.7"/>
+      </linearGradient>
+    </defs>
+    <circle cx="200" cy="200" r="178" fill="none" stroke="url(#ft-rg)" stroke-width="8"/>
+    <text x="95" y="235" fill="#00E5FF" fill-opacity="0.7" font-family="Arial Black,sans-serif" font-size="130" font-weight="bold">&lt;</text>
+    <text x="185" y="235" fill="#C4BDB5" font-family="Arial Black,sans-serif" font-size="130" font-weight="bold">/</text>
+    <text x="248" y="235" fill="#7D2AE8" fill-opacity="0.7" font-family="Arial Black,sans-serif" font-size="130" font-weight="bold">&gt;</text>
+  </svg>
+  <div class="footer-inner">
+    <div class="footer-logo">Robert <span>·</span> Thuo</div>
+    <div class="footer-copy">© 2026 Robert Thuo Njehu. Designed &amp; Developed with care.</div>
+    <div class="footer-social">
+      <a href="#">LinkedIn</a>
+      <a href="#">X / Twitter</a>
+      <a href="#">Behance</a>
+      <a href="#">Dribbble</a>
+    </div>
   </div>
 </footer>
 
-<!-- AI Chat Widget Wrapper -->
-<div id="ai-widget-container">
-  <!-- The Floating Chat Bubble Icon -->
-  <button id="ai-bubble-trigger" class="subtle-bounce" aria-label="Open AI Assistant" title="Click to chat">
-    <!-- Clean Modern AI/Spark Icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"/>
-      <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5Z"/>
-      <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z"/>
-    </svg>
-    <span class="bubble-badge">Ask me anything</span>
-  </button>
+<!-- AI CHAT TRIGGER -->
+<button class="ai-chat-btn" id="aiChatBtn" aria-label="Ask Bob's AI Agent">
+  <div class="ai-pulse"></div>
+  Ask Bob's AI
+</button>
 
-  <!-- The Actual Chat Window (Hidden by Default) -->
-  <div id="ai-chat-window" class="hidden">
-    <div class="chat-header" style="text-align: center;">
-      <h4>Bob's AI Agent</h4>
-      <button id="close-chat">&times;</button>
-    </div>
-    <div id="chat-messages" class="chat-messages">
-      <div class="message assistant">Hey 👋 I'm Bob's AI assistant. Looking to start a project or see some work?</div>
-    </div>
-    <form id="chat-input-form" class="chat-input-area">
-      <input type="text" id="chat-user-input" placeholder="Ask about tech stacks, booking a project..." required autocomplete="off">
-      <button type="submit">Send</button>
-    </form>
+<!-- AI CHAT WINDOW -->
+<div id="ai-chat-window" class="hidden">
+  <div class="chat-header">
+    <h4>Bob's AI Agent</h4>
+    <button id="close-chat" aria-label="Close Chat">&times;</button>
   </div>
+  <div id="chat-messages" class="chat-messages">
+    <div class="message assistant">Hey 👋 I'm Bob's AI. Looking to start a project or see some work?</div>
+  </div>
+  <form id="chat-input-form" class="chat-input-area">
+    <input type="text" id="chat-user-input" placeholder="Ask about tech stacks, booking a project..." required autocomplete="off">
+    <button type="submit">Send</button>
+  </form>
 </div>
 
-<style>
-  /* Container Positioning */
-  #ai-widget-container {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    z-index: 9999;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-
-  /* The Floating Button Trigger */
-  #ai-bubble-trigger {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #0070f3, #7928ca);
-    color: white;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(121, 40, 202, 0.3);
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  #ai-bubble-trigger:hover {
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 12px 30px rgba(121, 40, 202, 0.5);
-  }
-
-  /* Premium Pulse & Soft Glow Effect */
-  #ai-bubble-trigger::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: inherit;
-    z-index: -1;
-    opacity: 0.5;
-    animation: bubblePulse 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 20px rgba(0, 112, 243, 0.6);
-  }
-
-  @keyframes bubblePulse {
-    0% { transform: scale(1); opacity: 0.6; }
-    100% { transform: scale(1.6); opacity: 0; }
-  }
-
-  /* "Ask me anything" Text Mini-Badge */
-  .bubble-badge {
-    position: absolute;
-    top: -5px;
-    right: -15px;
-    background: #ff0080;
-    color: white;
-    font-size: 11px;
-    font-weight: 800;
-    padding: 4px 12px;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(255, 0, 128, 0.4);
-    white-space: nowrap;
-    border: 2px solid #fff;
-    animation: badgeFloat 3s infinite ease-in-out;
-  }
-
-  @keyframes badgeFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-  }
-
-  /* --- CONTINUOUS GENTLE BOUNCE --- */
-  .subtle-bounce {
-    animation: gentleBounce 5s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
-  }
-
-  @keyframes gentleBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  /* Chat Box Container styling */
-  #ai-chat-window {
-    width: 380px;
-    height: 520px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: absolute;
-    bottom: 85px;
-    right: 0;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
-  #ai-chat-window.hidden {
-    opacity: 0;
-    transform: translateY(30px) scale(0.9);
-    pointer-events: none;
-  }
-
-  /* Header Styling */
-  .chat-header {
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    color: white;
-    padding: 20px;
-    position: relative;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-  .chat-header h4 { margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -0.5px; color: #f8fafc; }
-  .chat-header p { margin: 6px 0 0; font-size: 12px; color: #38bdf8; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-  #close-chat {
-    position: absolute; top: 15px; right: 20px;
-    background: rgba(255,255,255,0.1); border: none; color: white; 
-    width: 30px; height: 30px; border-radius: 50%;
-    display: grid; place-items: center; cursor: pointer;
-    transition: background 0.2s;
-  }
-  #close-chat:hover { background: rgba(255,255,255,0.2); }
-
-  /* Message Display Feed Area */
-  .chat-messages {
-    flex: 1; padding: 20px; overflow-y: auto;
-    display: flex; flex-direction: column; gap: 16px; background: #f1f5f9;
-  }
-  .message {
-    max-width: 85%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    position: relative;
-  }
-  .message.assistant { 
-    background: white; color: #1e293b; align-self: flex-start; 
-    border-bottom-left-radius: 4px; border-left: 4px solid #7928ca;
-  }
-  .message.user { 
-    background: linear-gradient(135deg, #0070f3, #7928ca); 
-    color: white; align-self: flex-end; 
-    border-bottom-right-radius: 4px;
-    box-shadow: 0 4px 15px rgba(121, 40, 202, 0.25);
-  }
-
-  /* Typing Indicator Animation */
-  .typing-dots { display: flex; gap: 4px; padding: 5px 0; }
-  .typing-dots span { 
-    width: 6px; height: 6px; background: #94a3b8; border-radius: 50%; 
-    animation: typingBounce 1.4s infinite; 
-  }
-  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes typingBounce {
-    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-    40% { transform: scale(1); opacity: 1; }
-  }
-
-  /* Input Form Area - FIXED VISIBILITY */
-  .chat-input-area { 
-    display: flex; padding: 15px; background: white; 
-    border-top: 1px solid #e2e8f0; gap: 10px;
-  }
-  #chat-user-input {
-    flex: 1; border: 1.5px solid #e2e8f0; padding: 12px 16px; 
-    border-radius: 12px; font-size: 14px; outline: none;
-    background: #f8fafc; color: #0f172a !important;
-    caret-color: #0070f3;
-    transition: all 0.2s;
-  }
-  #chat-user-input:focus {
-    border-color: #7928ca;
-    box-shadow: 0 0 0 3px rgba(121, 40, 202, 0.1);
-    background: white;
-  }
-  .chat-input-area button {
-    background: linear-gradient(135deg, #0070f3, #7928ca); 
-    color: white; border: none; 
-    font-weight: 700; padding: 0 20px; border-radius: 12px; 
-    cursor: pointer; transition: all 0.2s;
-  }
-  .chat-input-area button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(121, 40, 202, 0.3);
-  }
-</style>
-
 <script>
-  const bubbleTrigger = document.getElementById('ai-bubble-trigger');
+// ════════════════════════════════════════════════
+//  PRELOADER — logo animation → site reveal
+// ════════════════════════════════════════════════
+(function() {
+  const preloader = document.getElementById('preloader');
+  const plBar     = document.getElementById('plBar');
+  const plPct     = document.getElementById('plPct');
+  const ring      = document.querySelector('.pl-ring');
+
+  // SVG ring dash setup
+  const len = ring.getTotalLength();
+  ring.style.strokeDasharray  = len;
+  ring.style.strokeDashoffset = len;
+
+  // Cosmetic progress bar
+  let pct = 0;
+  const pctInterval = setInterval(() => {
+    pct = Math.min(pct + Math.random() * 4 + 1, 95);
+    plPct.textContent = Math.round(pct) + '%';
+    plBar.style.transform  = 'scaleX(' + pct / 100 + ')';
+    plBar.style.transition = 'transform .2s ease';
+  }, 60);
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+      clearInterval(pctInterval);
+      plPct.textContent = '100%';
+      plBar.style.transform = 'scaleX(1)';
+
+      // Idle loop
+      gsap.to('.pl-symbols', { y: -8, duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+      gsap.to('.pl-ring', {
+        strokeWidth: 7,
+        filter: 'drop-shadow(0px 0px 18px rgba(0,229,255,0.45))',
+        duration: 2, ease: 'sine.inOut', yoyo: true, repeat: -1
+      });
+
+      setTimeout(exitPreloader, 1200);
+    }
+  });
+
+  tl.to('.pl-ring', { strokeDashoffset: 0, duration: 1.2, ease: 'power2.inOut' }, 0)
+    .from('.pl-lbracket', { x: -60, opacity: 0, duration: .8, ease: 'back.out(1.7)' }, 1.0)
+    .from('.pl-rbracket', { x:  60, opacity: 0, duration: .8, ease: 'back.out(1.7)' }, 1.0)
+    .from('.pl-slash',    { y: -80, opacity: 0, duration: .8, ease: 'bounce.out'     }, 1.1)
+    .to  ('.pl-slash',    { x: 5, duration: .05, yoyo: true, repeat: 3 }, 1.55)
+    .fromTo('.pl-line-l', { scaleX: 0, transformOrigin: 'right' }, { scaleX: 1, duration: .5, ease: 'power2.out' }, 1.85)
+    .fromTo('.pl-line-r', { scaleX: 0, transformOrigin: 'left'  }, { scaleX: 1, duration: .5, ease: 'power2.out' }, 1.85)
+    .from('.pl-the', { letterSpacing: '20px', opacity: 0, duration: .6, ease: 'power2.out' }, 1.85)
+    .from('.pl-c', { x: -30, opacity: 0, duration: .5, ease: 'power2.out' }, 2.2)
+    .from('.pl-o', { scale: .2, opacity: 0, duration: .5, ease: 'back.out(1.5)' }, 2.4)
+    .fromTo('.pl-d', { opacity: 0, skewX: 30 }, { opacity: 1, skewX: 0, duration: .1, ease: 'steps(3)' }, 2.6)
+    .from('.pl-e', { opacity: 0, x: -20, duration: .8, ease: 'power1.inOut' }, 2.7)
+    .from('.pl-hub', { y: 30, opacity: 0, duration: .8, ease: 'power3.out' }, 2.8);
+
+  function exitPreloader() {
+    gsap.to(preloader, {
+      opacity: 0, duration: .9, ease: 'power2.inOut',
+      onComplete: () => {
+        preloader.style.display = 'none';
+        document.body.style.overflow = '';
+        initSite();
+      }
+    });
+  }
+
+  // Lock scroll during load
+  document.body.style.overflow = 'hidden';
+})();
+
+
+// ════════════════════════════════════════════════
+//  SITE INIT (deferred until after preloader exit)
+// ════════════════════════════════════════════════
+function initSite() {
+
+  // Custom Cursor
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+  (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+  document.querySelectorAll('a,button,.work-card,.service-card,.why-item,.testimonial-card,#close-chat,.chat-input-area button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
+  });
+
+  // Sticky Nav
+  const nav=document.getElementById('mainNav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>80));
+
+  // Scroll Reveal
+  const revObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        const bar=e.target.querySelector('.skill-bar-fill');
+        if(bar) setTimeout(()=>bar.style.transform='scaleX('+bar.dataset.width+')',200);
+      }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+  // Counter animation
+  function runCounter(el){
+    const target=+el.dataset.count, suffix=el.dataset.suffix||'+', dur=2200, start=performance.now();
+    (function tick(now){ const p=Math.min((now-start)/dur,1), eased=1-Math.pow(1-p,3); el.textContent=Math.round(eased*target)+suffix; if(p<1)requestAnimationFrame(tick); })(start);
+  }
+  const statsObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ document.querySelectorAll('[data-count]').forEach(runCounter); statsObs.disconnect(); } });
+  },{threshold:.5});
+  const statsEl=document.querySelector('.hero-stats');
+  if(statsEl) statsObs.observe(statsEl);
+
+  // Mobile nav
+  const toggle=document.getElementById('navToggle'), links=document.getElementById('navLinks');
+  toggle.addEventListener('click',()=>links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+  // Formspree Contact Form Submission Handler
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('formSubmit');
+      const feedback = document.getElementById('form-feedback');
+
+      const formData = {
+        name:    document.getElementById('name').value,
+        email:   document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value
+      };
+
+      btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = 'Sending…';
+      feedback.style.display = 'none';
+
+      try {
+        const response = await fetch('https://formspree.io/f/xaqvrwgj', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+          feedback.textContent = '✓ Message sent! I\'ll get back to you shortly.';
+          feedback.className = 'form-feedback form-feedback--success';
+          feedback.style.display = 'block';
+          contactForm.reset();
+        } else {
+          const result = await response.json();
+          feedback.textContent = '✗ ' + (result.error || 'Something went wrong. Please try again.');
+          feedback.className = 'form-feedback form-feedback--error';
+          feedback.style.display = 'block';
+        }
+      } catch (err) {
+        feedback.textContent = '✗ Could not send message. Check your connection and try again.';
+        feedback.className = 'form-feedback form-feedback--error';
+        feedback.style.display = 'block';
+      }
+
+      btn.disabled = false;
+      btn.textContent = originalText;
+    });
+  }
+
+  // AI Chat Toggle & Backend Integration
+  const chatBtn = document.getElementById('aiChatBtn');
   const chatWindow = document.getElementById('ai-chat-window');
   const closeChat = document.getElementById('close-chat');
   const chatForm = document.getElementById('chat-input-form');
   const userInput = document.getElementById('chat-user-input');
   const chatMessages = document.getElementById('chat-messages');
 
-  // Toggle Chat UI Panel Open/Close
-  bubbleTrigger.addEventListener('click', () => {
-    chatWindow.classList.toggle('hidden');
-    // Stop the bounce once the user engages
-    bubbleTrigger.classList.remove('subtle-bounce');
-    userInput.focus();
-  });
+  if (chatBtn && chatWindow && closeChat && chatForm) {
+    chatBtn.addEventListener('click', () => {
+      chatWindow.classList.toggle('hidden');
+      userInput.focus();
+    });
 
-  closeChat.addEventListener('click', () => chatWindow.classList.add('hidden'));
+    closeChat.addEventListener('click', () => {
+      chatWindow.classList.add('hidden');
+    });
 
-  // Submit and route messages to Vercel Endpoint API
-  chatForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const messageText = userInput.value.trim();
-    if (!messageText) return;
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const messageText = userInput.value.trim();
+      if (!messageText) return;
 
-    // 1. Append user bubble
-    appendMessage(messageText, 'user');
-    userInput.value = '';
+      // 1. Append user message bubble
+      appendMessage(messageText, 'user');
+      userInput.value = '';
 
-    // 2. Add loading indicator placeholder
-    const loadingDiv = appendMessage('', 'assistant');
-    loadingDiv.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+      // 2. Add typing indicator
+      const loadingDiv = appendMessage('', 'assistant');
+      loadingDiv.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
 
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userMessage: messageText })
-      });
-      
-      let data;
       try {
-        data = await response.json();
-      } catch (jsonErr) {
-        throw new Error("Invalid server response (Not JSON)");
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userMessage: messageText })
+        });
+        
+        let data;
+        try {
+          data = await response.json();
+        } catch (jsonErr) {
+          throw new Error("Invalid server response (Not JSON)");
+        }
+        
+        loadingDiv.remove(); // Drop the placeholder loading line
+        
+        if (response.ok) {
+          appendMessage(data.reply, 'assistant');
+        } else {
+          console.error("API Error Response:", data);
+          const errorMsg = data.details ? `AI Connection Failed: ${data.details}` : (data.error || "Unknown Error");
+          appendMessage("I'm sorry, I encountered an issue: " + errorMsg, 'assistant');
+        }
+      } catch (err) {
+        loadingDiv.remove();
+        console.error("Fetch Error:", err);
+        appendMessage("Network failure: " + err.message, 'assistant');
       }
-      
-      loadingDiv.remove(); // Drop the placeholder loading line
-      
-      if (response.ok) {
-        appendMessage(data.reply, 'assistant');
-      } else {
-        console.error("API Error Response:", data);
-        const errorMsg = data.details ? `AI Connection Failed: ${data.details}` : (data.error || "Unknown Error");
-        appendMessage("I'm sorry, I encountered an issue: " + errorMsg, 'assistant');
-      }
-    } catch (err) {
-      loadingDiv.remove();
-      console.error("Fetch Error:", err);
-      appendMessage("Network failure: " + err.message, 'assistant');
-    }
-  });
+    });
+  }
 
   function appendMessage(text, sender) {
     const msg = document.createElement('div');
     msg.classList.add('message', sender);
     
     if (text) {
-      // Basic Markdown Link & Bullet Point Rendering
+      // Basic Markdown Link & Linebreak Rendering
       let formattedText = text
-        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: #0070f3; font-weight: bold; text-decoration: underline;">$1</a>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: var(--gold); font-weight: bold; text-decoration: underline;">$1</a>')
         .replace(/\n/g, '<br>');
       
       msg.innerHTML = formattedText;
@@ -780,8 +1338,14 @@
     chatMessages.scrollTop = chatMessages.scrollHeight; // Autoscroll window downwards
     return msg;
   }
-</script>
 
-<script src="assets/site.js"></script>
+  // Nav logo mark hover glow
+  const navMark=document.querySelector('.nav-logo-mark');
+  if(navMark){
+    navMark.addEventListener('mouseenter',()=>navMark.style.filter='drop-shadow(0 0 7px rgba(0,229,255,.55))');
+    navMark.addEventListener('mouseleave',()=>navMark.style.filter='');
+  }
+}
+</script>
 </body>
 </html>
