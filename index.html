@@ -124,26 +124,341 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .skill-bar-fill{height:100%;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.19,1,.22,1)}
 
 /* WORK */
-.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:4rem}
-.work-card{position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--surface-2)}
-.work-card-bg{position:absolute;inset:0;transition:transform .7s cubic-bezier(.19,1,.22,1)}
-.work-card:hover .work-card-bg{transform:scale(1.06)}
-.work-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,10,9,.95) 0%,rgba(12,10,9,.15) 60%,transparent 100%);z-index:1;transition:background .4s}
-.work-card:hover .work-card-overlay{background:linear-gradient(to top,rgba(12,10,9,.98) 0%,rgba(12,10,9,.5) 60%,rgba(12,10,9,.1) 100%)}
-.work-card-content{position:absolute;bottom:0;left:0;right:0;padding:2rem;z-index:2;transform:translateY(.4rem);transition:transform .4s}
-.work-card:hover .work-card-content{transform:translateY(0)}
-.work-tags{display:flex;gap:.5rem;margin-bottom:.8rem}
-.work-tag{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--border-gold);padding:.25rem .6rem}
-.work-title{font-family:'Cormorant Garamond',serif;font-size:1.85rem;font-weight:300;color:var(--paper);line-height:1.15}
-.work-subtitle{font-size:.9rem;color:var(--muted-light);margin-top:.35rem;font-weight:300}
-.work-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);text-decoration:none;margin-top:1rem;opacity:0;transform:translateY(.4rem);transition:opacity .3s .1s,transform .3s .1s}
-.work-card:hover .work-link{opacity:1;transform:translateY(0)}
-.work-bg-1{background:linear-gradient(135deg,#1a0f2e 0%,#2d1754 50%,#1a0f2e 100%)}
-.work-bg-2{background:linear-gradient(135deg,#0d1f1a 0%,#1a3d32 50%,#0d1f1a 100%)}
-.work-bg-3{background:linear-gradient(135deg,#1f1a0d 0%,#3d320d 50%,#1f1a0d 100%)}
-.work-bg-4{background:linear-gradient(135deg,#1f0d1a 0%,#3d1932 50%,#1f0d1a 100%)}
-.work-bg-5{background:linear-gradient(135deg,#0d1a1f 0%,#0d3240 50%,#0d1a1f 100%)}
-.work-bg-6{background:linear-gradient(135deg,#1a1a0d 0%,#322800 50%,#1a1a0d 100%)}
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.work-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border-paper);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: none;
+}
+
+.work-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  border-color: rgba(184, 150, 90, 0.4);
+}
+
+.work-card-image-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  overflow: hidden;
+  background: #120e0a;
+}
+
+.work-card-image-wrap img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-card:hover .work-card-image-wrap img {
+  transform: scale(1.05);
+}
+
+.work-card-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(12, 10, 9, 0.9) 0%, rgba(12, 10, 9, 0.4) 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.work-card:hover .work-card-hover-overlay {
+  opacity: 1;
+}
+
+.work-card-hover-cta {
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  transform: translateY(10px);
+  transition: transform 0.3s ease, background 0.3s ease;
+  cursor: none;
+}
+
+.work-card:hover .work-card-hover-cta {
+  transform: translateY(0);
+}
+
+.work-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.work-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.work-card-tag {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--border-gold);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+
+.work-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--paper);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.work-card-description {
+  font-size: 0.88rem;
+  color: var(--muted-light);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 2.7rem;
+}
+
+.work-card-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.work-card-btn {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  cursor: none;
+}
+
+.work-card-btn--primary {
+  background: var(--gold);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+}
+
+.work-card-btn--primary:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+.work-card-btn--outline {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(245, 240, 232, 0.2);
+}
+
+.work-card-btn--outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* --- MODAL DIALOG --- */
+.project-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.project-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 10, 9, 0.85);
+  backdrop-filter: blur(10px);
+}
+
+.project-modal-content {
+  position: relative;
+  background: var(--surface-2);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  max-width: 800px;
+  width: 100%;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  z-index: 1;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  transform: scale(0.95) translateY(15px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.project-modal.active .project-modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.project-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  background: rgba(24, 20, 16, 0.8);
+  border: 1px solid var(--border-gold);
+  border-radius: 50%;
+  color: var(--paper);
+  font-size: 1.2rem;
+  display: grid;
+  place-items: center;
+  cursor: none;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.project-modal-close:hover {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+
+.project-modal-hero {
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  position: relative;
+  background: #120e0a;
+}
+
+.project-modal-hero img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-modal-body {
+  padding: 2.5rem;
+}
+
+.project-modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.project-modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--paper);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.project-modal-description {
+  font-size: 1rem;
+  color: var(--muted-light);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.project-modal-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.project-modal-btn {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.85rem 2rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+}
+
+/* WORK RESPONSIVE */
+@media (max-width: 1200px) {
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .project-modal {
+    padding: 1rem;
+  }
+  .project-modal-body {
+    padding: 1.5rem;
+  }
+  .project-modal-title {
+    font-size: 2rem;
+  }
+}
+
+
 
 /* WHY ME */
 .why-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border-gold);margin-top:4rem}
@@ -220,7 +535,6 @@ footer{background:var(--surface);padding:2.5rem 4rem;display:flex;justify-conten
   .service-card:nth-child(3n){border-right:1px solid var(--border-paper)}
   .service-card:nth-child(2n){border-right:none}
   .skills-layout{grid-template-columns:1fr;gap:3rem}
-  .work-grid{grid-template-columns:1fr}
   .why-grid{grid-template-columns:1fr 1fr}
   .why-item:nth-child(3n){border-right:1px solid var(--border-gold)}
   .why-item:nth-child(2n){border-right:none}
@@ -838,81 +1152,130 @@ footer {
   <h2 class="section-title on-dark reveal d1">Recent <em>projects</em></h2>
   <div class="work-grid">
 
-    <div class="work-card reveal">
-      <div class="work-card-bg work-bg-1">
-        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><circle cx="300" cy="225" r="180" fill="none" stroke="#B8965A" stroke-width=".7"/><circle cx="300" cy="225" r="120" fill="none" stroke="#B8965A" stroke-width=".5"/><circle cx="300" cy="225" r="60" fill="none" stroke="#B8965A" stroke-width=".5"/><line x1="0" y1="225" x2="600" y2="225" stroke="#B8965A" stroke-width=".4"/><line x1="300" y1="0" x2="300" y2="450" stroke="#B8965A" stroke-width=".4"/></svg>
+    <!-- Project 1: Shop Zetu -->
+    <div class="work-card reveal" data-project-id="shop-zetu">
+      <div class="work-card-image-wrap">
+        <img src="assets/projects/shop-zetu.png" onerror="this.src='assets/portfolio-image.png'" alt="Shop Zetu" loading="lazy">
+        <div class="work-card-hover-overlay">
+          <button class="work-card-hover-cta">View Project</button>
+        </div>
       </div>
-      <div class="work-card-overlay"></div>
       <div class="work-card-content">
-        <div class="work-tags"><span class="work-tag">E-Commerce</span><span class="work-tag">Shopify</span></div>
-        <div class="work-title">Shop Zetu</div>
-        <div class="work-subtitle">Kenya's premier multi-brand fashion &amp; beauty platform</div>
-        <a href="https://www.shopzetu.com/" target="_blank" class="work-link">View Live Project →</a>
+        <div class="work-card-tags">
+          <span class="work-card-tag">E-Commerce</span>
+          <span class="work-card-tag">Shopify</span>
+        </div>
+        <h3 class="work-card-title">Shop Zetu</h3>
+        <p class="work-card-description">Kenya's premier multi-brand fashion & beauty platform offering a seamless shopping experience.</p>
+        <div class="work-card-actions">
+          <a href="https://www.shopzetu.com/" target="_blank" class="work-card-btn work-card-btn--primary">Live Preview</a>
+        </div>
       </div>
     </div>
 
-    <div class="work-card reveal d1">
-      <div class="work-card-bg work-bg-2">
-        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><rect x="50" y="50" width="500" height="350" fill="none" stroke="#B8965A" stroke-width=".7"/><rect x="100" y="100" width="400" height="250" fill="none" stroke="#B8965A" stroke-width=".5"/><rect x="150" y="150" width="300" height="150" fill="none" stroke="#B8965A" stroke-width=".5"/><line x1="50" y1="50" x2="550" y2="400" stroke="#B8965A" stroke-width=".4"/><line x1="550" y1="50" x2="50" y2="400" stroke="#B8965A" stroke-width=".4"/></svg>
+    <!-- Project 2: A&D Store -->
+    <div class="work-card reveal d1" data-project-id="aandd-store">
+      <div class="work-card-image-wrap">
+        <img src="assets/projects/aandd-store.png" onerror="this.src='assets/portfolio-image.png'" alt="A&D Store Kenya" loading="lazy">
+        <div class="work-card-hover-overlay">
+          <button class="work-card-hover-cta">View Project</button>
+        </div>
       </div>
-      <div class="work-card-overlay"></div>
       <div class="work-card-content">
-        <div class="work-tags"><span class="work-tag">E-Commerce</span><span class="work-tag">Hardware</span></div>
-        <div class="work-title">A&amp;D Store Kenya</div>
-        <div class="work-subtitle">Trusted online supplier for hardware &amp; premium building materials</div>
-        <a href="https://aanddstore.co.ke/" target="_blank" class="work-link">View Live Project →</a>
+        <div class="work-card-tags">
+          <span class="work-card-tag">E-Commerce</span>
+          <span class="work-card-tag">Hardware</span>
+        </div>
+        <h3 class="work-card-title">A&D Store Kenya</h3>
+        <p class="work-card-description">Trusted online supplier for hardware, power tools and premium building materials.</p>
+        <div class="work-card-actions">
+          <a href="https://aanddstore.co.ke/" target="_blank" class="work-card-btn work-card-btn--primary">Live Preview</a>
+        </div>
       </div>
     </div>
 
-    <div class="work-card reveal">
-      <div class="work-card-bg work-bg-3">
-        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><polygon points="300,50 550,400 50,400" fill="none" stroke="#B8965A" stroke-width=".7"/><polygon points="300,130 480,370 120,370" fill="none" stroke="#B8965A" stroke-width=".5"/><polygon points="300,210 410,340 190,340" fill="none" stroke="#B8965A" stroke-width=".5"/><circle cx="300" cy="275" r="4" fill="#B8965A"/></svg>
+    <!-- Project 3: Mobile Commerce -->
+    <div class="work-card reveal d2" data-project-id="mobile-commerce">
+      <div class="work-card-image-wrap">
+        <img src="assets/projects/mobile-commerce.png" onerror="this.src='assets/portfolio-image.png'" alt="Mobile Commerce Engine" loading="lazy">
+        <div class="work-card-hover-overlay">
+          <button class="work-card-hover-cta">View Project</button>
+        </div>
       </div>
-      <div class="work-card-overlay"></div>
       <div class="work-card-content">
-        <div class="work-tags"><span class="work-tag">Mobile</span><span class="work-tag">UI/UX</span></div>
-        <div class="work-title">Mobile Commerce Engine</div>
-        <div class="work-subtitle">High-fidelity storefront engineered for premium UX &amp; precision alignment</div>
-        <a href="#work" class="work-link">Case Study →</a>
+        <div class="work-card-tags">
+          <span class="work-card-tag">Mobile</span>
+          <span class="work-card-tag">UI/UX</span>
+        </div>
+        <h3 class="work-card-title">Mobile Commerce Engine</h3>
+        <p class="work-card-description">High-fidelity storefront engineered for premium UX, transitions and alignment.</p>
+        <div class="work-card-actions">
+          <a href="#work" class="work-card-btn work-card-btn--outline">Case Study</a>
+        </div>
       </div>
     </div>
 
-    <div class="work-card reveal d1">
-      <div class="work-card-bg work-bg-4">
-        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><path d="M50,225 Q150,50 300,225 Q450,400 550,225" fill="none" stroke="#B8965A" stroke-width=".7"/><path d="M50,225 Q150,100 300,225 Q450,350 550,225" fill="none" stroke="#B8965A" stroke-width=".5"/><path d="M50,225 Q150,150 300,225 Q450,300 550,225" fill="none" stroke="#B8965A" stroke-width=".5"/><circle cx="300" cy="225" r="8" fill="#B8965A" opacity=".5"/></svg>
+    <!-- Project 4: Puzzle & Play -->
+    <div class="work-card reveal" data-project-id="puzzle-play">
+      <div class="work-card-image-wrap">
+        <img src="assets/projects/puzzle-play.png" onerror="this.src='assets/portfolio-image.png'" alt="Puzzle & Play" loading="lazy">
+        <div class="work-card-hover-overlay">
+          <button class="work-card-hover-cta">View Project</button>
+        </div>
       </div>
-      <div class="work-card-overlay"></div>
       <div class="work-card-content">
-        <div class="work-tags"><span class="work-tag">E-Commerce</span><span class="work-tag">Supabase</span></div>
-        <div class="work-title">Puzzle &amp; Play</div>
-        <div class="work-subtitle">Production storefront with Supabase RLS &amp; mobile-optimised category grids</div>
-        <a href="#work" class="work-link">Case Study →</a>
+        <div class="work-card-tags">
+          <span class="work-card-tag">E-Commerce</span>
+          <span class="work-card-tag">Supabase</span>
+        </div>
+        <h3 class="work-card-title">Puzzle & Play</h3>
+        <p class="work-card-description">Production storefront with Supabase RLS & mobile-optimised category grids.</p>
+        <div class="work-card-actions">
+          <a href="#work" class="work-card-btn work-card-btn--outline">Case Study</a>
+        </div>
       </div>
     </div>
 
-    <div class="work-card reveal">
-      <div class="work-card-bg work-bg-5">
-        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><rect x="80" y="80" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".7"/><rect x="250" y="80" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".7"/><rect x="420" y="80" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".7"/><rect x="80" y="290" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".5"/><rect x="250" y="290" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".5"/><rect x="420" y="290" width="100" height="80" fill="none" stroke="#B8965A" stroke-width=".5"/><line x1="130" y1="160" x2="130" y2="290" stroke="#B8965A" stroke-width=".3"/><line x1="300" y1="160" x2="300" y2="290" stroke="#B8965A" stroke-width=".3"/><line x1="470" y1="160" x2="470" y2="290" stroke="#B8965A" stroke-width=".3"/></svg>
+    <!-- Project 5: St. Andrew -->
+    <div class="work-card reveal d1" data-project-id="st-andrew">
+      <div class="work-card-image-wrap">
+        <img src="assets/projects/st-andrew.png" onerror="this.src='assets/portfolio-image.png'" alt="St. Andrew Catholic Parish" loading="lazy">
+        <div class="work-card-hover-overlay">
+          <button class="work-card-hover-cta">View Project</button>
+        </div>
       </div>
-      <div class="work-card-overlay"></div>
       <div class="work-card-content">
-        <div class="work-tags"><span class="work-tag">SaaS</span><span class="work-tag">Dashboard</span></div>
-        <div class="work-title">Store Admin Portal</div>
-        <div class="work-subtitle">Secure role-based dashboard with real-time inventory management</div>
-        <a href="#work" class="work-link">Case Study →</a>
+        <div class="work-card-tags">
+          <span class="work-card-tag">Web Design</span>
+          <span class="work-card-tag">UI/UX</span>
+          <span class="work-card-tag">Frontend</span>
+        </div>
+        <h3 class="work-card-title">St. Andrew Catholic Parish</h3>
+        <p class="work-card-description">A modern church website showcasing construction journey, ministries and weekly schedules.</p>
+        <div class="work-card-actions">
+          <a href="https://st-andrew-catholic-parish.vercel.app/" target="_blank" class="work-card-btn work-card-btn--primary">Live Preview</a>
+        </div>
       </div>
     </div>
 
-    <div class="work-card reveal d1">
-      <div class="work-card-bg work-bg-6">
-        <svg viewBox="0 0 600 450" style="position:absolute;inset:0;width:100%;height:100%;opacity:.22"><line x1="50" y1="400" x2="550" y2="80" stroke="#B8965A" stroke-width=".7"/><line x1="50" y1="350" x2="550" y2="140" stroke="#B8965A" stroke-width=".4"/><line x1="50" y1="300" x2="550" y2="200" stroke="#B8965A" stroke-width=".4"/><circle cx="160" cy="340" r="5" fill="#B8965A"/><circle cx="290" cy="255" r="5" fill="#B8965A"/><circle cx="410" cy="180" r="5" fill="#B8965A"/><circle cx="520" cy="110" r="5" fill="#B8965A"/></svg>
+    <!-- Project 6: Kariuki Enterprises -->
+    <div class="work-card reveal d2" data-project-id="kariuki-enterprises">
+      <div class="work-card-image-wrap">
+        <img src="assets/projects/kariuki-enterprises.png" onerror="this.src='assets/portfolio-image.png'" alt="Kariuki Enterprises" loading="lazy">
+        <div class="work-card-hover-overlay">
+          <button class="work-card-hover-cta">View Project</button>
+        </div>
       </div>
-      <div class="work-card-overlay"></div>
       <div class="work-card-content">
-        <div class="work-tags"><span class="work-tag">Product</span><span class="work-tag">Web</span></div>
-        <div class="work-title">Kariuki Enterprises</div>
-        <div class="work-subtitle">Standardised product catalog with dynamic filtering &amp; uniform grid alignment</div>
-        <a href="#work" class="work-link">Case Study →</a>
+        <div class="work-tags">
+          <span class="work-card-tag">Product</span>
+          <span class="work-card-tag">Web</span>
+        </div>
+        <h3 class="work-card-title">Kariuki Enterprises</h3>
+        <p class="work-card-description">Standardised product catalog with dynamic filtering & uniform grid alignment.</p>
+        <div class="work-card-actions">
+          <a href="#work" class="work-card-btn work-card-btn--outline">Case Study</a>
+        </div>
       </div>
     </div>
 
@@ -1087,6 +1450,26 @@ footer {
   </form>
 </div>
 
+<!-- PROJECT DETAIL MODAL -->
+<div id="projectModal" class="project-modal" aria-hidden="true" role="dialog">
+  <div class="project-modal-backdrop"></div>
+  <div class="project-modal-content">
+    <button class="project-modal-close" id="modalClose" aria-label="Close Modal">&times;</button>
+    <div class="project-modal-hero">
+      <img id="modalImage" src="assets/portfolio-image.png" alt="Project Preview">
+    </div>
+    <div class="project-modal-body">
+      <div class="project-modal-tags" id="modalTags"></div>
+      <h3 class="project-modal-title" id="modalTitle">Project Title</h3>
+      <p class="project-modal-description" id="modalDescription">Project detailed description goes here...</p>
+      <div class="project-modal-actions">
+        <a id="modalLiveLink" href="#" target="_blank" class="project-modal-btn project-modal-btn--primary">Live Preview</a>
+        <a id="modalCaseLink" href="#" class="project-modal-btn project-modal-btn--outline">View Case Study</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 // ════════════════════════════════════════════════
 //  PRELOADER — logo animation → site reveal
@@ -1170,10 +1553,18 @@ function initSite() {
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
   (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
-  document.querySelectorAll('a,button,.work-card,.service-card,.why-item,.testimonial-card,#close-chat,.chat-input-area button').forEach(el=>{
-    el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
-    el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
+  // Custom Cursor Hover Logic (Event Delegation for Dynamic & Static Elements)
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest('a, button, .work-card, .service-card, .why-item, .testimonial-card, #close-chat, .chat-input-area button, .project-modal-close, .project-modal-btn')) {
+      ring.classList.add('hover');
+    }
   });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest('a, button, .work-card, .service-card, .why-item, .testimonial-card, #close-chat, .chat-input-area button, .project-modal-close, .project-modal-btn')) {
+      ring.classList.remove('hover');
+    }
+  });
+
 
   // Sticky Nav
   const nav=document.getElementById('mainNav');
@@ -1345,6 +1736,138 @@ function initSite() {
     navMark.addEventListener('mouseenter',()=>navMark.style.filter='drop-shadow(0 0 7px rgba(0,229,255,.55))');
     navMark.addEventListener('mouseleave',()=>navMark.style.filter='');
   }
+
+  // ════════════════════════════════════════════════
+  //  PROJECT MODAL LOGIC & DATA
+  // ════════════════════════════════════════════════
+  const projectsData = {
+    "shop-zetu": {
+      title: "Shop Zetu",
+      description: "Kenya's premier fashion & beauty e-commerce destination, optimized for fast performance, custom shopping flows and conversions. Features an interactive modern frontend that showcases products dynamically.",
+      tags: ["E-Commerce", "Shopify", "UI/UX"],
+      image: "assets/projects/shop-zetu.png",
+      liveUrl: "https://www.shopzetu.com/",
+      caseStudyUrl: ""
+    },
+    "aandd-store": {
+      title: "A&D Store Kenya",
+      description: "A comprehensive digital catalog and shopping platform for power tools, hardware, and premium building accessories. Designed to support high-intent product filtering and dynamic item showcases.",
+      tags: ["E-Commerce", "Hardware", "Web Design"],
+      image: "assets/projects/aandd-store.png",
+      liveUrl: "https://aanddstore.co.ke/",
+      caseStudyUrl: ""
+    },
+    "mobile-commerce": {
+      title: "Mobile Commerce Engine",
+      description: "A high-performance mobile storefront concept crafted for lightning-fast product filtering, seamless gestures, and micro-interactions. Engineered for premium UX and perfect grid alignment.",
+      tags: ["Mobile", "UI/UX", "Frontend"],
+      image: "assets/projects/mobile-commerce.png",
+      liveUrl: "",
+      caseStudyUrl: "#work"
+    },
+    "puzzle-play": {
+      title: "Puzzle & Play",
+      description: "A highly interactive e-commerce application powered by React and Supabase featuring real-time client state synchronization, security rules (RLS), and custom layout components.",
+      tags: ["E-Commerce", "Supabase", "React"],
+      image: "assets/projects/puzzle-play.png",
+      liveUrl: "",
+      caseStudyUrl: "#work"
+    },
+    "st-andrew": {
+      title: "St. Andrew Catholic Parish Website",
+      description: "A modern church website showcasing the journey from foundation to consecration, including ministries, events, and parish information. Designed with an elegant, responsive interface that fosters community engagement.",
+      tags: ["Web Design", "UI/UX", "Frontend"],
+      image: "assets/projects/st-andrew.png",
+      liveUrl: "https://st-andrew-catholic-parish.vercel.app/",
+      caseStudyUrl: ""
+    },
+    "kariuki-enterprises": {
+      title: "Kariuki Enterprises",
+      description: "A standardized digital product listing layout optimized with CSS grid systems for rigid alignments. Built to support robust catalog filtering and clean item displays.",
+      tags: ["Product", "Web Design", "Vanilla JS"],
+      image: "assets/projects/kariuki-enterprises.png",
+      liveUrl: "",
+      caseStudyUrl: "#work"
+    }
+  };
+
+  const modal = document.getElementById('projectModal');
+  const modalClose = document.getElementById('modalClose');
+  const modalImage = document.getElementById('modalImage');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDescription');
+  const modalTags = document.getElementById('modalTags');
+  const modalLiveLink = document.getElementById('modalLiveLink');
+  const modalCaseLink = document.getElementById('modalCaseLink');
+
+  function openModal(projectId) {
+    const project = projectsData[projectId];
+    if (!project) return;
+
+    modalImage.src = project.image;
+    // Handle fallback if path doesn't exist
+    modalImage.onerror = () => { modalImage.src = 'assets/portfolio-image.png'; };
+    modalTitle.textContent = project.title;
+    modalDesc.textContent = project.description;
+
+    // Build Tags
+    modalTags.innerHTML = '';
+    project.tags.forEach(tag => {
+      const span = document.createElement('span');
+      span.className = 'work-card-tag';
+      span.textContent = tag;
+      modalTags.appendChild(span);
+    });
+
+    // Actions
+    if (project.liveUrl) {
+      modalLiveLink.href = project.liveUrl;
+      modalLiveLink.style.display = 'inline-flex';
+    } else {
+      modalLiveLink.style.display = 'none';
+    }
+
+    if (project.caseStudyUrl) {
+      modalCaseLink.href = project.caseStudyUrl;
+      modalCaseLink.style.display = 'inline-flex';
+    } else {
+      modalCaseLink.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // Lock background scroll
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = ''; // Unlock background scroll
+  }
+
+  // Event listeners for cards to open modal on click
+  document.querySelectorAll('.work-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      // Prevent opening modal if user clicks directly on external preview links
+      if (e.target.closest('.work-card-btn')) return;
+
+      const projectId = card.dataset.projectId;
+      openModal(projectId);
+    });
+  });
+
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  if (modal) {
+    const backdrop = modal.querySelector('.project-modal-backdrop');
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+  }
+
+  // Close on ESC keypress
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
 }
 </script>
 </body>
