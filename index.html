@@ -29,9 +29,11 @@ html{font-size:17px}
 html{scroll-behavior:smooth}
 body{font-family:'Jost',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;cursor:none}
 
-.cursor-dot{position:fixed;width:6px;height:6px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
-.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s,background .2s;opacity:.6}
-.cursor-ring.hover{width:48px;height:48px;opacity:1;background:rgba(184,150,90,.08)}
+.cursor-dot{position:fixed;width:6px;height:6px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:100001;transform:translate(-50%,-50%);transition:transform .1s,opacity .3s;opacity:0}
+.cursor-dot.visible{opacity:1}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:100000;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s,background .2s;opacity:0}
+.cursor-ring.visible{opacity:.6}
+.cursor-ring.visible.hover{width:48px;height:48px;opacity:1;background:rgba(184,150,90,.08)}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:background .4s,padding .4s,backdrop-filter .4s}
@@ -299,142 +301,6 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
   color: var(--gold);
 }
 
-/* --- MODAL DIALOG --- */
-.project-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-modal.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.project-modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(12, 10, 9, 0.85);
-  backdrop-filter: blur(10px);
-}
-
-.project-modal-content {
-  position: relative;
-  background: var(--surface-2);
-  border: 1px solid var(--border-gold);
-  border-radius: 16px;
-  max-width: 800px;
-  width: 100%;
-  max-height: calc(100vh - 4rem);
-  overflow-y: auto;
-  z-index: 1;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  transform: scale(0.95) translateY(15px);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-}
-
-.project-modal.active .project-modal-content {
-  transform: scale(1) translateY(0);
-}
-
-.project-modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 36px;
-  height: 36px;
-  background: rgba(24, 20, 16, 0.8);
-  border: 1px solid var(--border-gold);
-  border-radius: 50%;
-  color: var(--paper);
-  font-size: 1.2rem;
-  display: grid;
-  place-items: center;
-  cursor: none;
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.project-modal-close:hover {
-  background: var(--gold);
-  color: var(--ink);
-  border-color: var(--gold);
-}
-
-.project-modal-hero {
-  width: 100%;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio */
-  position: relative;
-  background: #120e0a;
-}
-
-.project-modal-hero img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.project-modal-body {
-  padding: 2.5rem;
-}
-
-.project-modal-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.project-modal-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.5rem;
-  font-weight: 300;
-  color: var(--paper);
-  margin-bottom: 1rem;
-  line-height: 1.1;
-}
-
-.project-modal-description {
-  font-size: 1rem;
-  color: var(--muted-light);
-  line-height: 1.8;
-  margin-bottom: 2rem;
-  font-weight: 300;
-}
-
-.project-modal-actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.project-modal-btn {
-  font-family: 'Jost', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 0.85rem 2rem;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: none;
-}
-
 /* WORK RESPONSIVE */
 @media (max-width: 1200px) {
   .work-grid {
@@ -447,18 +313,7 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  .project-modal {
-    padding: 1rem;
-  }
-  .project-modal-body {
-    padding: 1.5rem;
-  }
-  .project-modal-title {
-    font-size: 2rem;
-  }
 }
-
-
 
 /* WHY ME */
 .why-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border-gold);margin-top:4rem}
@@ -512,7 +367,7 @@ footer{background:var(--surface);padding:2.5rem 4rem;display:flex;justify-conten
 .footer-social a:hover{color:var(--gold)}
 
 /* AI CHAT */
-.ai-chat-btn{position:fixed;bottom:2rem;right:2rem;z-index:200;background:var(--gold);color:var(--ink);border:none;padding:.85rem 1.5rem;font-family:'Jost',sans-serif;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;font-weight:500;cursor:none;display:flex;align-items:center;gap:.6rem;box-shadow:0 4px 28px rgba(184,150,90,.35);transition:background .3s}
+.ai-chat-btn{position:fixed;bottom:2rem;right:2rem;z-index:200;background:var(--gold);color:var(--ink);border:none;padding:.85rem 1.5rem;font-family:'Jost',sans-serif;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;font-weight:500;display:flex;align-items:center;gap:.6rem;box-shadow:0 4px 28px rgba(184,150,90,.35);transition:background .3s}
 .ai-chat-btn:hover{background:var(--gold-light)}
 .ai-pulse{width:6px;height:6px;background:var(--ink);border-radius:50%;animation:pulse-dot 2s ease infinite;flex-shrink:0}
 @keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.5}}
@@ -1153,12 +1008,9 @@ footer {
   <div class="work-grid">
 
     <!-- Project 1: Shop Zetu -->
-    <div class="work-card reveal" data-project-id="shop-zetu">
+    <div class="work-card reveal">
       <div class="work-card-image-wrap">
         <img src="assets/projects/shop-zetu.png" onerror="this.src='assets/portfolio-image.png'" alt="Shop Zetu" loading="lazy">
-        <div class="work-card-hover-overlay">
-          <button class="work-card-hover-cta">View Project</button>
-        </div>
       </div>
       <div class="work-card-content">
         <div class="work-card-tags">
@@ -1174,12 +1026,9 @@ footer {
     </div>
 
     <!-- Project 2: A&D Store -->
-    <div class="work-card reveal d1" data-project-id="aandd-store">
+    <div class="work-card reveal d1">
       <div class="work-card-image-wrap">
         <img src="assets/projects/aandd-store.png" onerror="this.src='assets/portfolio-image.png'" alt="A&D Store Kenya" loading="lazy">
-        <div class="work-card-hover-overlay">
-          <button class="work-card-hover-cta">View Project</button>
-        </div>
       </div>
       <div class="work-card-content">
         <div class="work-card-tags">
@@ -1195,12 +1044,9 @@ footer {
     </div>
 
     <!-- Project 3: Mobile Commerce -->
-    <div class="work-card reveal d2" data-project-id="mobile-commerce">
+    <div class="work-card reveal d2">
       <div class="work-card-image-wrap">
         <img src="assets/projects/mobile-commerce.png" onerror="this.src='assets/portfolio-image.png'" alt="Mobile Commerce Engine" loading="lazy">
-        <div class="work-card-hover-overlay">
-          <button class="work-card-hover-cta">View Project</button>
-        </div>
       </div>
       <div class="work-card-content">
         <div class="work-card-tags">
@@ -1210,18 +1056,15 @@ footer {
         <h3 class="work-card-title">Mobile Commerce Engine</h3>
         <p class="work-card-description">High-fidelity storefront engineered for premium UX, transitions and alignment.</p>
         <div class="work-card-actions">
-          <a href="#work" class="work-card-btn work-card-btn--outline">Case Study</a>
+          <a href="#" target="_blank" class="work-card-btn work-card-btn--outline">Live Preview</a>
         </div>
       </div>
     </div>
 
     <!-- Project 4: Puzzle & Play -->
-    <div class="work-card reveal" data-project-id="puzzle-play">
+    <div class="work-card reveal">
       <div class="work-card-image-wrap">
         <img src="assets/projects/puzzle-play.png" onerror="this.src='assets/portfolio-image.png'" alt="Puzzle & Play" loading="lazy">
-        <div class="work-card-hover-overlay">
-          <button class="work-card-hover-cta">View Project</button>
-        </div>
       </div>
       <div class="work-card-content">
         <div class="work-card-tags">
@@ -1231,18 +1074,15 @@ footer {
         <h3 class="work-card-title">Puzzle & Play</h3>
         <p class="work-card-description">Production storefront with Supabase RLS & mobile-optimised category grids.</p>
         <div class="work-card-actions">
-          <a href="#work" class="work-card-btn work-card-btn--outline">Case Study</a>
+          <a href="#" target="_blank" class="work-card-btn work-card-btn--outline">Live Preview</a>
         </div>
       </div>
     </div>
 
     <!-- Project 5: St. Andrew -->
-    <div class="work-card reveal d1" data-project-id="st-andrew">
+    <div class="work-card reveal d1">
       <div class="work-card-image-wrap">
-        <img src="assets/projects/st-andrew.png" onerror="this.src='assets/portfolio-image.png'" alt="St. Andrew Catholic Parish" loading="lazy">
-        <div class="work-card-hover-overlay">
-          <button class="work-card-hover-cta">View Project</button>
-        </div>
+        <img src="assets/projects/st-andrew.png" onerror="this.src='assets/portfolio-image.png'" alt="St. Andrew Catholic Parish Website" loading="lazy">
       </div>
       <div class="work-card-content">
         <div class="work-card-tags">
@@ -1250,8 +1090,8 @@ footer {
           <span class="work-card-tag">UI/UX</span>
           <span class="work-card-tag">Frontend</span>
         </div>
-        <h3 class="work-card-title">St. Andrew Catholic Parish</h3>
-        <p class="work-card-description">A modern church website showcasing construction journey, ministries and weekly schedules.</p>
+        <h3 class="work-card-title">St. Andrew Catholic Parish Website</h3>
+        <p class="work-card-description">A modern church website showcasing the journey from foundation to consecration, including ministries, events, and parish information.</p>
         <div class="work-card-actions">
           <a href="https://st-andrew-catholic-parish.vercel.app/" target="_blank" class="work-card-btn work-card-btn--primary">Live Preview</a>
         </div>
@@ -1259,22 +1099,19 @@ footer {
     </div>
 
     <!-- Project 6: Kariuki Enterprises -->
-    <div class="work-card reveal d2" data-project-id="kariuki-enterprises">
+    <div class="work-card reveal d2">
       <div class="work-card-image-wrap">
         <img src="assets/projects/kariuki-enterprises.png" onerror="this.src='assets/portfolio-image.png'" alt="Kariuki Enterprises" loading="lazy">
-        <div class="work-card-hover-overlay">
-          <button class="work-card-hover-cta">View Project</button>
-        </div>
       </div>
       <div class="work-card-content">
-        <div class="work-tags">
+        <div class="work-card-tags">
           <span class="work-card-tag">Product</span>
           <span class="work-card-tag">Web</span>
         </div>
         <h3 class="work-card-title">Kariuki Enterprises</h3>
         <p class="work-card-description">Standardised product catalog with dynamic filtering & uniform grid alignment.</p>
         <div class="work-card-actions">
-          <a href="#work" class="work-card-btn work-card-btn--outline">Case Study</a>
+          <a href="#" target="_blank" class="work-card-btn work-card-btn--outline">Live Preview</a>
         </div>
       </div>
     </div>
@@ -1450,26 +1287,6 @@ footer {
   </form>
 </div>
 
-<!-- PROJECT DETAIL MODAL -->
-<div id="projectModal" class="project-modal" aria-hidden="true" role="dialog">
-  <div class="project-modal-backdrop"></div>
-  <div class="project-modal-content">
-    <button class="project-modal-close" id="modalClose" aria-label="Close Modal">&times;</button>
-    <div class="project-modal-hero">
-      <img id="modalImage" src="assets/portfolio-image.png" alt="Project Preview">
-    </div>
-    <div class="project-modal-body">
-      <div class="project-modal-tags" id="modalTags"></div>
-      <h3 class="project-modal-title" id="modalTitle">Project Title</h3>
-      <p class="project-modal-description" id="modalDescription">Project detailed description goes here...</p>
-      <div class="project-modal-actions">
-        <a id="modalLiveLink" href="#" target="_blank" class="project-modal-btn project-modal-btn--primary">Live Preview</a>
-        <a id="modalCaseLink" href="#" class="project-modal-btn project-modal-btn--outline">View Case Study</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
 // ════════════════════════════════════════════════
 //  PRELOADER — logo animation → site reveal
@@ -1550,17 +1367,19 @@ function initSite() {
   // Custom Cursor
   const dot  = document.getElementById('cursorDot');
   const ring = document.getElementById('cursorRing');
+  if (dot) dot.classList.add('visible');
+  if (ring) ring.classList.add('visible');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
   (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
   // Custom Cursor Hover Logic (Event Delegation for Dynamic & Static Elements)
   document.addEventListener('mouseover', e => {
-    if (e.target.closest('a, button, .work-card, .service-card, .why-item, .testimonial-card, #close-chat, .chat-input-area button, .project-modal-close, .project-modal-btn')) {
+    if (e.target.closest('a, button, .work-card, .service-card, .why-item, .testimonial-card, #close-chat, .chat-input-area button')) {
       ring.classList.add('hover');
     }
   });
   document.addEventListener('mouseout', e => {
-    if (e.target.closest('a, button, .work-card, .service-card, .why-item, .testimonial-card, #close-chat, .chat-input-area button, .project-modal-close, .project-modal-btn')) {
+    if (e.target.closest('a, button, .work-card, .service-card, .why-item, .testimonial-card, #close-chat, .chat-input-area button')) {
       ring.classList.remove('hover');
     }
   });
@@ -1736,138 +1555,6 @@ function initSite() {
     navMark.addEventListener('mouseenter',()=>navMark.style.filter='drop-shadow(0 0 7px rgba(0,229,255,.55))');
     navMark.addEventListener('mouseleave',()=>navMark.style.filter='');
   }
-
-  // ════════════════════════════════════════════════
-  //  PROJECT MODAL LOGIC & DATA
-  // ════════════════════════════════════════════════
-  const projectsData = {
-    "shop-zetu": {
-      title: "Shop Zetu",
-      description: "Kenya's premier fashion & beauty e-commerce destination, optimized for fast performance, custom shopping flows and conversions. Features an interactive modern frontend that showcases products dynamically.",
-      tags: ["E-Commerce", "Shopify", "UI/UX"],
-      image: "assets/projects/shop-zetu.png",
-      liveUrl: "https://www.shopzetu.com/",
-      caseStudyUrl: ""
-    },
-    "aandd-store": {
-      title: "A&D Store Kenya",
-      description: "A comprehensive digital catalog and shopping platform for power tools, hardware, and premium building accessories. Designed to support high-intent product filtering and dynamic item showcases.",
-      tags: ["E-Commerce", "Hardware", "Web Design"],
-      image: "assets/projects/aandd-store.png",
-      liveUrl: "https://aanddstore.co.ke/",
-      caseStudyUrl: ""
-    },
-    "mobile-commerce": {
-      title: "Mobile Commerce Engine",
-      description: "A high-performance mobile storefront concept crafted for lightning-fast product filtering, seamless gestures, and micro-interactions. Engineered for premium UX and perfect grid alignment.",
-      tags: ["Mobile", "UI/UX", "Frontend"],
-      image: "assets/projects/mobile-commerce.png",
-      liveUrl: "",
-      caseStudyUrl: "#work"
-    },
-    "puzzle-play": {
-      title: "Puzzle & Play",
-      description: "A highly interactive e-commerce application powered by React and Supabase featuring real-time client state synchronization, security rules (RLS), and custom layout components.",
-      tags: ["E-Commerce", "Supabase", "React"],
-      image: "assets/projects/puzzle-play.png",
-      liveUrl: "",
-      caseStudyUrl: "#work"
-    },
-    "st-andrew": {
-      title: "St. Andrew Catholic Parish Website",
-      description: "A modern church website showcasing the journey from foundation to consecration, including ministries, events, and parish information. Designed with an elegant, responsive interface that fosters community engagement.",
-      tags: ["Web Design", "UI/UX", "Frontend"],
-      image: "assets/projects/st-andrew.png",
-      liveUrl: "https://st-andrew-catholic-parish.vercel.app/",
-      caseStudyUrl: ""
-    },
-    "kariuki-enterprises": {
-      title: "Kariuki Enterprises",
-      description: "A standardized digital product listing layout optimized with CSS grid systems for rigid alignments. Built to support robust catalog filtering and clean item displays.",
-      tags: ["Product", "Web Design", "Vanilla JS"],
-      image: "assets/projects/kariuki-enterprises.png",
-      liveUrl: "",
-      caseStudyUrl: "#work"
-    }
-  };
-
-  const modal = document.getElementById('projectModal');
-  const modalClose = document.getElementById('modalClose');
-  const modalImage = document.getElementById('modalImage');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalDesc = document.getElementById('modalDescription');
-  const modalTags = document.getElementById('modalTags');
-  const modalLiveLink = document.getElementById('modalLiveLink');
-  const modalCaseLink = document.getElementById('modalCaseLink');
-
-  function openModal(projectId) {
-    const project = projectsData[projectId];
-    if (!project) return;
-
-    modalImage.src = project.image;
-    // Handle fallback if path doesn't exist
-    modalImage.onerror = () => { modalImage.src = 'assets/portfolio-image.png'; };
-    modalTitle.textContent = project.title;
-    modalDesc.textContent = project.description;
-
-    // Build Tags
-    modalTags.innerHTML = '';
-    project.tags.forEach(tag => {
-      const span = document.createElement('span');
-      span.className = 'work-card-tag';
-      span.textContent = tag;
-      modalTags.appendChild(span);
-    });
-
-    // Actions
-    if (project.liveUrl) {
-      modalLiveLink.href = project.liveUrl;
-      modalLiveLink.style.display = 'inline-flex';
-    } else {
-      modalLiveLink.style.display = 'none';
-    }
-
-    if (project.caseStudyUrl) {
-      modalCaseLink.href = project.caseStudyUrl;
-      modalCaseLink.style.display = 'inline-flex';
-    } else {
-      modalCaseLink.style.display = 'none';
-    }
-
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden'; // Lock background scroll
-  }
-
-  function closeModal() {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = ''; // Unlock background scroll
-  }
-
-  // Event listeners for cards to open modal on click
-  document.querySelectorAll('.work-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      // Prevent opening modal if user clicks directly on external preview links
-      if (e.target.closest('.work-card-btn')) return;
-
-      const projectId = card.dataset.projectId;
-      openModal(projectId);
-    });
-  });
-
-  if (modalClose) modalClose.addEventListener('click', closeModal);
-  if (modal) {
-    const backdrop = modal.querySelector('.project-modal-backdrop');
-    if (backdrop) backdrop.addEventListener('click', closeModal);
-  }
-
-  // Close on ESC keypress
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
-      closeModal();
-    }
-  });
 }
 </script>
 </body>
