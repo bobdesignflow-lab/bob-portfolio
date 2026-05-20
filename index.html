@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -128,37 +127,17 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 
 /* ── PROJECTS SECTION ───────────────────────────────────── */
 .pf-section {
-  font-family: 'DM Sans', sans-serif;
-  padding: 80px 5vw;
-  color: #0a0a0f;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.pf-label {
-  font-family: 'Syne', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #888;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.pf-heading {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(28px, 4vw, 40px);
-  font-weight: 800;
-  line-height: 1.1;
-  margin: 0 0 8px;
-  color: #0a0a0f;
+  font-family: 'Jost', sans-serif;
+  color: var(--paper);
 }
 
 .pf-sub {
-  font-size: 15px;
-  color: #666;
-  margin: 0 0 48px;
+  font-family: 'Jost', sans-serif;
+  font-size: 1.05rem;
+  color: var(--muted-light);
+  line-height: 1.9;
+  max-width: 48ch;
+  margin: 0 0 4rem;
   font-weight: 300;
 }
 
@@ -166,48 +145,49 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .pf-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+  gap: 2rem;
 }
 
 /* ── CARD ─────────────────────────────────────────────── */
 .pf-card {
-  background: #ffffff;
-  border: 1px solid #e8e8e8;
+  background: var(--surface-2);
+  border: 1px solid var(--border-paper);
   border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: none;
 }
 
 .pf-card:hover {
-  transform: translateY(-4px);
-  border-color: #c8c8c8;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  transform: translateY(-6px);
+  border-color: rgba(184, 150, 90, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 .pf-card.featured {
   grid-column: span 2;
   flex-direction: row;
-  min-height: 300px;
+  min-height: 340px;
 }
 
 /* ── PREVIEW AREA ─────────────────────────────────────── */
 .pf-preview {
   position: relative;
   overflow: hidden;
-  background: #0a0a0f;
+  background: #000000;
   flex-shrink: 0;
 }
 
 .pf-card:not(.featured) .pf-preview {
-  height: 220px;
+  height: 240px;
 }
 
 .pf-card.featured .pf-preview {
-  width: 55%;
+  width: 50%;
   height: auto;
-  min-height: 300px;
+  min-height: 340px;
 }
 
 /* Live iframe */
@@ -232,12 +212,12 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .pf-preview-cta {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(12, 10, 9, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease;
   z-index: 3;
 }
 
@@ -248,21 +228,23 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .pf-preview-cta a {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: #ffffff;
-  color: #0a0a0f;
-  font-family: 'Syne', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 11px 20px;
-  border-radius: 100px;
+  gap: 8px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0;
   text-decoration: none;
-  letter-spacing: 0.03em;
-  transition: background 0.15s;
+  transition: background 0.3s, transform 0.3s;
 }
 
 .pf-preview-cta a:hover {
-  background: #f0f0f0;
+  background: var(--gold-light);
+  transform: translateY(-1px);
 }
 
 /* Static SVG mock area */
@@ -276,67 +258,70 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 
 /* ── CARD BODY ────────────────────────────────────────── */
 .pf-body {
-  padding: 20px 22px 22px;
+  padding: 2.2rem;
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 8px;
+  gap: 1rem;
 }
 
 .pf-card.featured .pf-body {
-  padding: 32px 32px;
+  padding: 3rem;
   justify-content: center;
 }
 
 /* Tags */
 .pf-tags {
   display: flex;
-  gap: 6px;
+  gap: 0.6rem;
   flex-wrap: wrap;
-  margin-bottom: 2px;
+  margin-bottom: 0.2rem;
 }
 
 .pf-tag {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 3px 9px;
-  border-radius: 100px;
-  border: 1px solid #e0e0e0;
-  color: #888;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  border-radius: 0;
 }
 
 .pf-tag.accent {
-  background: #0a0a0f;
-  border-color: #0a0a0f;
-  color: #ffffff;
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
 }
 
 /* Title */
 .pf-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
   margin: 0;
   line-height: 1.2;
-  color: #0a0a0f;
+  color: var(--paper);
 }
 
 .pf-card.featured .pf-title {
-  font-size: 26px;
+  font-size: 2.2rem;
 }
 
 /* Description */
 .pf-desc {
-  font-size: 13.5px;
-  line-height: 1.65;
-  color: #666;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--muted-light);
   margin: 0;
+  font-weight: 300;
 }
 
 .pf-card.featured .pf-desc {
-  font-size: 15px;
+  font-size: 1.05rem;
 }
 
 /* Footer */
@@ -345,52 +330,61 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
   align-items: center;
   justify-content: space-between;
   margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid #f0f0f0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-paper);
 }
 
 .pf-stack {
   display: flex;
-  gap: 4px;
+  gap: 0.4rem;
   flex-wrap: wrap;
 }
 
 .pf-stack span {
-  font-size: 10px;
-  color: #999;
-  background: #f5f5f5;
-  padding: 3px 8px;
-  border-radius: 4px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  color: var(--muted-light);
+  background: rgba(245, 240, 232, 0.05);
+  padding: 0.3rem 0.6rem;
+  border-radius: 0;
 }
 
 .pf-link {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-family: 'Syne', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: #0a0a0f;
+  gap: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
   text-decoration: none;
-  padding: 7px 14px;
-  border-radius: 100px;
-  border: 1px solid #e0e0e0;
-  transition: background 0.15s, border-color 0.15s;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--border-gold);
+  transition: all 0.3s;
   white-space: nowrap;
 }
 
 .pf-link:hover {
-  background: #f5f5f5;
-  border-color: #ccc;
+  background: var(--gold);
+  color: var(--ink);
 }
 
 .pf-no-link {
-  font-size: 11px;
-  color: #bbb;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  color: var(--muted);
   font-style: italic;
 }
 
 /* ── RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 991px) {
+  .pf-card.featured .pf-preview {
+    width: 45%;
+  }
+}
+
 @media (max-width: 768px) {
   .pf-grid {
     grid-template-columns: 1fr;
@@ -403,16 +397,16 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 
   .pf-card.featured .pf-preview {
     width: 100%;
-    height: 220px;
+    height: 240px;
     min-height: unset;
   }
 
   .pf-card.featured .pf-body {
-    padding: 20px 22px 22px;
+    padding: 2.2rem;
   }
 
   .pf-card.featured .pf-title {
-    font-size: 20px;
+    font-size: 1.8rem;
   }
 }
 
@@ -1099,11 +1093,15 @@ footer {
   </div>
 </section>
 
-<section id="work" class="pf-section">
+<!-- ────── WORK ────── -->
+<section id="work" class="sec sec-dark pf-section">
 
-  <span class="pf-label">Selected Work</span>
-  <h2 class="pf-heading">Recent projects</h2>
-  <p class="pf-sub">A peek at the brands and products I've shaped.</p>
+  <div class="section-label reveal">
+    <span>Selected Work</span>
+    <span class="section-num">04</span>
+  </div>
+  <h2 class="section-title on-dark reveal d1">Recent <em>projects</em></h2>
+  <p class="pf-sub reveal d2">A peek at the brands and products I've shaped.</p>
 
   <div class="pf-grid">
 
