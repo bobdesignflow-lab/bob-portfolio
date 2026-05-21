@@ -47,8 +47,11 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .nav-links a:hover::after{transform:scaleX(1)}
 .nav-cta{font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:.6rem 1.6rem;text-decoration:none;transition:background .3s;font-family:'Jost',sans-serif}
 .nav-cta:hover{background:var(--gold-light)}
-.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem;position:relative;z-index:100}
 .nav-toggle span{display:block;width:24px;height:1px;background:var(--paper);margin:5px 0;transition:all .3s}
+.nav-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0;transform:scale(0)}
+.nav-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
 /* HERO */
 #hero{min-height:100vh;background:var(--ink);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
@@ -83,7 +86,17 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 /* SECTION BASE */
 .sec{padding:8rem 4rem;position:relative}
 .sec-dark{background:var(--surface);color:var(--paper)}
-.sec-light{background:var(--paper)}
+.sec-light{background:var(--surface);color:var(--paper)}
+#about{background:var(--surface);color:var(--paper)}
+#about .section-title,
+.sec-light .section-title{color:var(--paper)}
+#about .about-body,
+.sec-light .skills-intro p,
+.sec-light .why-desc{color:var(--muted-light)}
+#about .about-body strong{color:var(--gold);font-weight:600}
+#about .about-body em{color:var(--gold);font-style:normal}
+.sec-light .skill-name,
+.sec-light .why-title{color:var(--paper)}
 .section-label{display:flex;align-items:center;gap:1rem;margin-bottom:3rem}
 .section-label::before{content:'';display:block;width:2.5rem;height:1px;background:var(--gold)}
 .section-label span{font-size:.82rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);font-weight:400}
@@ -93,7 +106,7 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .on-dark{color:var(--paper)}
 
 /* ABOUT */
-#about{background:var(--paper);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;padding:8rem 4rem}
+#about{background:var(--surface);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;padding:8rem 4rem}
 .about-image{position:relative}
 .about-image img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
 .about-image::before{content:'';position:absolute;inset:-1.5rem 1.5rem 1.5rem -1.5rem;border:1px solid var(--border-gold);z-index:-1}
@@ -1740,8 +1753,14 @@ function initSite() {
 
   // Mobile nav
   const toggle=document.getElementById('navToggle'), links=document.getElementById('navLinks');
-  toggle.addEventListener('click',()=>links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+  toggle.addEventListener('click',()=>{
+    links.classList.toggle('open');
+    toggle.classList.toggle('open');
+  });
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    links.classList.remove('open');
+    toggle.classList.remove('open');
+  }));
 
   // Formspree Contact Form Submission Handler
   const contactForm = document.getElementById('contactForm');
