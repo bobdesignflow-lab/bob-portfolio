@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -637,10 +638,287 @@ footer{background:var(--surface);padding:2.5rem 4rem;display:flex;justify-conten
 .footer-social a:hover{color:var(--gold)}
 
 /* AI CHAT */
-.ai-chat-btn{position:fixed;bottom:2rem;right:2rem;z-index:200;background:var(--gold);color:var(--ink);border:none;padding:.85rem 1.5rem;font-family:'Jost',sans-serif;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;font-weight:500;display:flex;align-items:center;gap:.6rem;box-shadow:0 4px 28px rgba(184,150,90,.35);transition:background .3s}
-.ai-chat-btn:hover{background:var(--gold-light)}
-.ai-pulse{width:6px;height:6px;background:var(--ink);border-radius:50%;animation:pulse-dot 2s ease infinite;flex-shrink:0}
-@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.5}}
+.bob-fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 56px;
+    height: 56px;
+    background: #0d0d0d;
+    border: 0.5px solid #c9a84c;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, background 0.2s;
+    box-shadow: 0 0 0 0 rgba(201,168,76,0);
+}
+.bob-fab:hover {
+    transform: scale(1.08);
+    background: #121208;
+    box-shadow: 0 0 24px rgba(201,168,76,0.18);
+}
+.bob-fab svg { transition: opacity 0.2s, transform 0.3s; }
+.bob-fab .icon-chat { opacity: 1; transform: scale(1) rotate(0deg); }
+.bob-fab .icon-close { opacity: 0; transform: scale(0.5) rotate(-90deg); position: absolute; }
+.bob-fab.open .icon-chat { opacity: 0; transform: scale(0.5) rotate(90deg); }
+.bob-fab.open .icon-close { opacity: 1; transform: scale(1) rotate(0deg); }
+
+.bob-notif {
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 8px; height: 8px;
+    background: #c9a84c;
+    border-radius: 50%;
+    border: 2px solid #080808;
+    animation: notif-pulse 2.5s ease-in-out infinite;
+}
+@keyframes notif-pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+}
+
+.bob-panel {
+    position: fixed;
+    bottom: 6rem;
+    right: 2rem;
+    width: 360px;
+    max-height: 520px;
+    background: #0a0a0a;
+    border: 0.5px solid #222;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    overflow: hidden;
+    transform: translateY(20px) scale(0.96);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 0.5px #1a1a1a;
+}
+.bob-panel.open {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.bob-header {
+    padding: 1rem 1.25rem 0.875rem;
+    border-bottom: 0.5px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    background: #0d0d0d;
+}
+.bob-header-left { display: flex; align-items: center; gap: 10px; }
+.bob-avatar {
+    width: 32px; height: 32px;
+    background: #1a1608;
+    border: 0.5px solid #c9a84c;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: #c9a84c;
+    font-weight: 400;
+    flex-shrink: 0;
+}
+.bob-header-name {
+    font-size: 11px;
+    font-weight: 400;
+    color: #e8e2d4;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 3px;
+}
+.bob-header-status {
+    font-size: 9px;
+    color: #555;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 5px;
+}
+.status-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #4caf50;
+    animation: notif-pulse 3s ease-in-out infinite;
+}
+.bob-header-tag {
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    background: #1a1608;
+    border: 0.5px solid #3d2f0a;
+    padding: 3px 8px;
+}
+
+.bob-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: #1a1a1a transparent;
+}
+.bob-messages::-webkit-scrollbar { width: 3px; }
+.bob-messages::-webkit-scrollbar-track { background: transparent; }
+.bob-messages::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 2px; }
+
+.msg { display: flex; flex-direction: column; gap: 4px; animation: msgIn 0.35s cubic-bezier(0.16,1,0.3,1) both; }
+@keyframes msgIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.msg.user { align-items: flex-end; }
+.msg.bot  { align-items: flex-start; }
+
+.bubble {
+    max-width: 82%;
+    padding: 0.625rem 0.875rem;
+    font-size: 12px;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    border-radius: 1px;
+}
+.msg.bot .bubble {
+    background: #111;
+    border: 0.5px solid #1e1e1e;
+    color: #c8c0b0;
+    border-top-left-radius: 0;
+}
+.msg.user .bubble {
+    background: #1a1608;
+    border: 0.5px solid #3d2f0a;
+    color: #e8dfc8;
+    border-top-right-radius: 0;
+}
+
+.msg-time {
+    font-size: 9px;
+    color: #333;
+    letter-spacing: 0.08em;
+    padding: 0 2px;
+}
+
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+    animation: msgIn 0.4s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+}
+.qr-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #c9a84c;
+    background: #0d0d0d;
+    border: 0.5px solid #3d2f0a;
+    padding: 5px 10px;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    white-space: nowrap;
+}
+.qr-chip:hover {
+    background: #1a1608;
+    border-color: #c9a84c;
+    color: #f0d88a;
+}
+
+.typing-indicator {
+    display: flex; align-items: center; gap: 4px;
+    padding: 0.625rem 0.875rem;
+    background: #111;
+    border: 0.5px solid #1e1e1e;
+    width: fit-content;
+    border-top-left-radius: 0;
+    border-radius: 1px;
+    animation: msgIn 0.3s ease both;
+}
+.typing-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #555;
+    animation: typingBounce 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+    0%,60%,100% { transform: translateY(0); background: #444; }
+    30% { transform: translateY(-5px); background: #c9a84c; }
+}
+
+.bob-input-area {
+    padding: 0.875rem 1.25rem;
+    border-top: 0.5px solid #1a1a1a;
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    background: #0d0d0d;
+    flex-shrink: 0;
+}
+.bob-input {
+    flex: 1;
+    background: #111;
+    border: 0.5px solid #222;
+    color: #e8e2d4;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 8px 12px;
+    resize: none;
+    outline: none;
+    border-radius: 1px;
+    line-height: 1.5;
+    max-height: 80px;
+    letter-spacing: 0.02em;
+    transition: border-color 0.2s;
+    scrollbar-width: none;
+}
+.bob-input:focus { border-color: #3d2f0a; }
+.bob-input::placeholder { color: #333; }
+.bob-input::-webkit-scrollbar { display: none; }
+
+.bob-send {
+    width: 34px; height: 34px;
+    background: #1a1608;
+    border: 0.5px solid #3d2f0a;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    border-radius: 1px;
+}
+.bob-send:hover { background: #221c0c; border-color: #c9a84c; }
+.bob-send:active { transform: scale(0.93); }
+.bob-send:disabled { opacity: 0.35; cursor: not-allowed; }
+.bob-send svg { pointer-events: none; }
+
+.bob-footer {
+    padding: 0.5rem 1.25rem;
+    border-top: 0.5px solid #111;
+    background: #080808;
+    flex-shrink: 0;
+}
+.bob-footer p {
+    font-size: 8px;
+    color: #2a2a2a;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+@media (max-width: 420px) {
+    .bob-panel { width: calc(100vw - 2rem); right: 1rem; bottom: 5rem; }
+    .bob-fab { right: 1rem; bottom: 1rem; }
+}
 
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(2rem);transition:opacity .9s cubic-bezier(.19,1,.22,1),transform .9s cubic-bezier(.19,1,.22,1)}
@@ -1795,24 +2073,43 @@ footer {
 </footer>
 
 <!-- AI CHAT TRIGGER -->
-<button class="ai-chat-btn" id="aiChatBtn" aria-label="Ask Bob's AI Agent">
-  <div class="ai-pulse"></div>
-  Ask Bob's AI
+<button class="bob-fab" id="bobFab" aria-label="Chat with Bob's AI assistant">
+  <span class="bob-notif" id="bobNotif"></span>
+  <svg class="icon-chat" width="20" height="20" fill="none" viewBox="0 0 24 24">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <svg class="icon-close" width="16" height="16" fill="none" viewBox="0 0 24 24">
+    <path d="M18 6 6 18M6 6l12 12" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
 </button>
 
-<!-- AI CHAT WINDOW -->
-<div id="ai-chat-window" class="hidden">
-  <div class="chat-header">
-    <h4>Bob's AI Agent</h4>
-    <button id="close-chat" aria-label="Close Chat">&times;</button>
+<div class="bob-panel" id="bobPanel" role="dialog" aria-label="Bob's AI Assistant">
+  <div class="bob-header">
+    <div class="bob-header-left">
+      <div class="bob-avatar">R</div>
+      <div class="bob-header-info">
+        <p class="bob-header-name">Bob's AI Agent</p>
+        <p class="bob-header-status"><span class="status-dot"></span> Online now</p>
+      </div>
+    </div>
+    <span class="bob-header-tag">AI · Powered</span>
   </div>
-  <div id="chat-messages" class="chat-messages">
-    <div class="message assistant">Hey 👋 I'm Bob's AI. Looking to start a project or see some work?</div>
+  <div class="bob-messages" id="bobMessages"></div>
+  <div class="bob-input-area">
+    <textarea
+      class="bob-input"
+      id="bobInput"
+      rows="1"
+      placeholder="Ask me anything..."
+      aria-label="Type your message"
+    ></textarea>
+    <button class="bob-send" id="bobSend" aria-label="Send message" disabled>
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+        <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
   </div>
-  <form id="chat-input-form" class="chat-input-area">
-    <input type="text" id="chat-user-input" placeholder="Ask about tech stacks, booking a project..." required autocomplete="off">
-    <button type="submit">Send</button>
-  </form>
+  <div class="bob-footer"><p>Powered by Claude · Robert Thuo Njehu</p></div>
 </div>
 
 <script>
@@ -2004,66 +2301,7 @@ function initSite() {
   }
 
   // AI Chat Toggle & Backend Integration
-  const chatBtn = document.getElementById('aiChatBtn');
-  const chatWindow = document.getElementById('ai-chat-window');
-  const closeChat = document.getElementById('close-chat');
-  const chatForm = document.getElementById('chat-input-form');
-  const userInput = document.getElementById('chat-user-input');
-  const chatMessages = document.getElementById('chat-messages');
-
-  if (chatBtn && chatWindow && closeChat && chatForm) {
-    chatBtn.addEventListener('click', () => {
-      chatWindow.classList.toggle('hidden');
-      userInput.focus();
-    });
-
-    closeChat.addEventListener('click', () => {
-      chatWindow.classList.add('hidden');
-    });
-
-    chatForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const messageText = userInput.value.trim();
-      if (!messageText) return;
-
-      // 1. Append user message bubble
-      appendMessage(messageText, 'user');
-      userInput.value = '';
-
-      // 2. Add typing indicator
-      const loadingDiv = appendMessage('', 'assistant');
-      loadingDiv.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
-
-      try {
-        const response = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userMessage: messageText })
-        });
-        
-        let data;
-        try {
-          data = await response.json();
-        } catch (jsonErr) {
-          throw new Error("Invalid server response (Not JSON)");
-        }
-        
-        loadingDiv.remove(); // Drop the placeholder loading line
-        
-        if (response.ok) {
-          appendMessage(data.reply, 'assistant');
-        } else {
-          console.error("API Error Response:", data);
-          const errorMsg = data.details ? `AI Connection Failed: ${data.details}` : (data.error || "Unknown Error");
-          appendMessage("I'm sorry, I encountered an issue: " + errorMsg, 'assistant');
-        }
-      } catch (err) {
-        loadingDiv.remove();
-        console.error("Fetch Error:", err);
-        appendMessage("Network failure: " + err.message, 'assistant');
-      }
-    });
-  }
+  // (Removed old widget integration; new Bob AI widget is handled by separate script.)
 
   function appendMessage(text, sender) {
     const msg = document.createElement('div');
@@ -2090,6 +2328,195 @@ function initSite() {
     navMark.addEventListener('mouseleave',()=>navMark.style.filter='');
   }
 }
+</script>
+<script>
+(function() {
+  const fab       = document.getElementById('bobFab');
+  const panel     = document.getElementById('bobPanel');
+  const messages  = document.getElementById('bobMessages');
+  const input     = document.getElementById('bobInput');
+  const sendBtn   = document.getElementById('bobSend');
+  const notifDot  = document.getElementById('bobNotif');
+
+  let isOpen      = false;
+  let isLoading   = false;
+  let greeted     = false;
+  let history     = [];
+
+  const SYSTEM = `You are Bob's AI Agent — the intelligent assistant embedded in Robert Thuo Njehu's portfolio website (thecodehub-ke.vercel.app).
+
+Robert is a multidisciplinary designer & full-stack developer based in Nairobi, Kenya. He specialises in:
+- Cinematic, high-converting websites and landing pages
+- React / Next.js / Node.js full-stack development  
+- UI/UX design (Figma, research-led, handoff-ready)
+- Brand identity, logos and visual systems
+- E-commerce (Shopify, Webflow, headless)
+- Mobile-responsive, SEO-optimised builds
+
+His standout projects include Shop Zetu (Kenya's premier fashion e-commerce platform) and A&D Store Kenya (hardware & building materials).
+He is available for new projects. Contact: bob.designflow@gmail.com | +254 713 911 222 | WhatsApp available.
+
+Your personality: refined, confident, and warm — matching the luxury aesthetic of the portfolio. Never robotic. Be concise (2–4 sentences max per reply). Guide visitors toward a project conversation or showing relevant work. 
+
+If asked about pricing: Robert works on project-based quotes — encourage them to describe their project so Robert can provide a tailored estimate.
+If asked something you don't know: offer to have Robert follow up directly.
+Always sign off important answers with a subtle nudge to get in touch.`;
+
+  const QUICK_REPLIES = [
+    { label: "See React projects →",  text: "Can you show me Robert's React or Next.js projects?" },
+    { label: "Need a landing page",   text: "I need a high-converting landing page. How fast can Robert deliver?" },
+    { label: "Branding & identity",   text: "Does Robert do brand identity and logo design?" },
+    { label: "Get a quote",           text: "I have a project in mind. How do I get a quote?" },
+  ];
+
+  function getTime() {
+    return new Date().toLocaleTimeString('en-KE', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function appendMessage(role, text, showQuickReplies = false) {
+    const wrap = document.createElement('div');
+    wrap.className = `msg ${role}`;
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = text;
+
+    const time = document.createElement('span');
+    time.className = 'msg-time';
+    time.textContent = getTime();
+
+    wrap.appendChild(bubble);
+    wrap.appendChild(time);
+    messages.appendChild(wrap);
+
+    if (showQuickReplies && role === 'bot') {
+      const qr = document.createElement('div');
+      qr.className = 'quick-replies';
+      QUICK_REPLIES.forEach(({ label, text: qText }) => {
+        const chip = document.createElement('button');
+        chip.className = 'qr-chip';
+        chip.textContent = label;
+        chip.onclick = () => {
+          qr.remove();
+          sendMessage(qText);
+        };
+        qr.appendChild(chip);
+      });
+      messages.appendChild(qr);
+    }
+
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function showTyping() {
+    const wrap = document.createElement('div');
+    wrap.id = 'typingWrap';
+    wrap.className = 'msg bot';
+    const ind = document.createElement('div');
+    ind.className = 'typing-indicator';
+    ind.innerHTML = `<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>`;
+    wrap.appendChild(ind);
+    messages.appendChild(wrap);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function removeTyping() {
+    const el = document.getElementById('typingWrap');
+    if (el) el.remove();
+  }
+
+  async function callClaude(userText) {
+    history.push({ role: 'user', content: userText });
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM,
+        messages: history,
+      }),
+    });
+
+    if (!res.ok) throw new Error(`API error ${res.status}`);
+    const data = await res.json();
+    const reply = data.content.map(b => b.text || '').join('').trim();
+    history.push({ role: 'assistant', content: reply });
+    return reply;
+  }
+
+  async function sendMessage(text) {
+    const msg = text.trim();
+    if (!msg || isLoading) return;
+
+    document.querySelectorAll('.quick-replies').forEach(el => el.remove());
+
+    appendMessage('user', msg);
+    input.value = '';
+    input.style.height = 'auto';
+    sendBtn.disabled = true;
+    isLoading = true;
+
+    showTyping();
+
+    try {
+      const reply = await callClaude(msg);
+      removeTyping();
+      appendMessage('bot', reply);
+    } catch (err) {
+      removeTyping();
+      appendMessage('bot', "Something went wrong on my end — but you can reach Robert directly at bob.designflow@gmail.com or on WhatsApp.");
+    }
+
+    isLoading = false;
+    sendBtn.disabled = input.value.trim() === '';
+  }
+
+  function greet() {
+    const hour = new Date().getHours();
+    const timeGreet = hour < 12 ? 'Good morning' : hour < 17 ? 'Hey there' : 'Good evening';
+
+    appendMessage(
+      'bot',
+      `${timeGreet} — I'm Bob's AI, Robert's virtual assistant. Whether you're looking for a stunning website, a React build, or a full brand identity, Robert's your person. What brings you here today?`,
+      true
+    );
+
+    history.push({
+      role: 'assistant',
+      content: `${timeGreet} — I'm Bob's AI, Robert's virtual assistant. Whether you're looking for a stunning website, a React build, or a full brand identity, Robert's your person. What brings you here today?`
+    });
+  }
+
+  fab.addEventListener('click', () => {
+    isOpen = !isOpen;
+    fab.classList.toggle('open', isOpen);
+    panel.classList.toggle('open', isOpen);
+    notifDot.style.display = 'none';
+
+    if (isOpen && !greeted) {
+      greeted = true;
+      setTimeout(greet, 300);
+    }
+    if (isOpen) setTimeout(() => input.focus(), 400);
+  });
+
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 80) + 'px';
+    sendBtn.disabled = input.value.trim() === '' || isLoading;
+  });
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(input.value);
+    }
+  });
+
+  sendBtn.addEventListener('click', () => sendMessage(input.value));
+})();
 </script>
 </body>
 </html>
