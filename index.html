@@ -141,13 +141,13 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 
 /* ===== SKILLS CSS ===== */
 .skills-section {
-  padding: 5rem 0;
-  background: var(--surface);
-  color: var(--paper);
+    padding: 8rem 4rem;
+    background: var(--surface);
+    color: var(--paper);
 }
 
 .skills-section .section-eyebrow {
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--gold);
@@ -161,7 +161,7 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .section-title em { font-style: italic; color: #c9a84c; }
 
 .skills-section .section-subtitle {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--muted-light);
   letter-spacing: 0.05em;
   margin-bottom: 3.5rem;
@@ -169,19 +169,21 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
   gap: 1.5rem;
-  background: #1a1a1a;
-  border: 1px solid #1a1a1a;
-  border-radius: 2px;
-  overflow: hidden;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
 }
 
 .skill-category {
-  background: #0d0d0d;
-  padding: 3rem 2.25rem;
-  position: relative;
-  transition: background 0.4s ease;
+    background: #0d0d0d;
+    padding: 3.5rem 2.5rem;
+    position: relative;
+    transition: background 0.4s ease;
+    border: 1px solid var(--border-paper);
+    border-radius: 2px;
 }
 
 .skill-category::before {
@@ -199,14 +201,14 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .skill-category:hover::before { transform: scaleX(1); }
 
 .category-icon {
-  font-size: 18px;
-  margin-bottom: 2rem;
-  opacity: 0.6;
+  font-size: 24px;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
   display: block;
 }
 
 .category-label {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #c9a84c;
@@ -216,12 +218,12 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .tags { display: flex; flex-wrap: wrap; gap: 12px; }
 
 .tag {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 300;
   color: #b8b0a0;
   background: #161616;
   border: 0.5px solid #2a2a2a;
-  padding: 5px 11px;
+  padding: 7px 14px;
   border-radius: 1px;
   transition: all 0.25s ease;
 }
@@ -255,7 +257,7 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 }
 
 .currently-learning {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #555;
@@ -264,7 +266,7 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .learning-tags { display: flex; gap: 10px; flex-wrap: wrap; }
 
 .learning-tag {
-  font-size: 10px;
+  font-size: 12px;
   color: #888;
   display: flex;
   align-items: center;
