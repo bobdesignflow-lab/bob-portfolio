@@ -128,15 +128,141 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .service-title{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:400;color:var(--paper);margin-bottom:.8rem}
 .service-desc{font-size:.95rem;line-height:1.75;color:var(--muted-light);font-weight:300}
 
-/* SKILLS */
-.skills-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:6rem;margin-top:4rem;align-items:start}
-.skills-intro p{font-size:1.05rem;line-height:1.9;color:var(--muted-on-light);font-weight:300;margin-bottom:1.5rem}
-.skill-item{margin-bottom:1.6rem}
-.skill-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem}
-.skill-name{font-size:.88rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);font-weight:500}
-.skill-pct{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);font-weight:300}
-.skill-bar-bg{height:2px;background:var(--paper-dark);overflow:hidden}
-.skill-bar-fill{height:100%;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.19,1,.22,1)}
+/* ===== SKILLS CSS ===== */
+.skills-section { padding: 5rem 0; }
+
+.section-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 0.6rem;
+}
+
+.section-title em { font-style: italic; color: #c9a84c; }
+
+.section-subtitle {
+  font-size: 11px;
+  color: #666;
+  letter-spacing: 0.05em;
+  margin-bottom: 3.5rem;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  background: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.skill-category {
+  background: #0d0d0d;
+  padding: 2rem 1.75rem;
+  position: relative;
+  transition: background 0.4s ease;
+}
+
+.skill-category::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: #c9a84c;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skill-category:hover { background: #111; }
+.skill-category:hover::before { transform: scaleX(1); }
+
+.category-icon {
+  font-size: 18px;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+  display: block;
+}
+
+.category-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 1.25rem;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.tag {
+  font-size: 11px;
+  font-weight: 300;
+  color: #b8b0a0;
+  background: #161616;
+  border: 0.5px solid #2a2a2a;
+  padding: 5px 11px;
+  border-radius: 1px;
+  transition: all 0.25s ease;
+}
+
+.skill-category:hover .tag {
+  border-color: #333;
+  color: #d0c8b8;
+}
+
+.tag.featured {
+  background: #1a1608;
+  border-color: #3d2f0a;
+  color: #c9a84c;
+}
+
+.skill-category:hover .tag.featured {
+  background: #221c0c;
+  border-color: #c9a84c;
+}
+
+.bottom-strip {
+  margin-top: 1px;
+  background: #0d0d0d;
+  border-top: 1px solid #1a1a1a;
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.currently-learning {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #555;
+}
+
+.learning-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.learning-tag {
+  font-size: 10px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #c9a84c;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.3); }
+}
 
 /* ── PROJECTS SECTION ───────────────────────────────────── */
 .pf-section {
@@ -1101,43 +1227,70 @@ footer {
   </div>
 </section>
 
-<!-- ────── SKILLS ────── -->
-<section id="skills" class="sec sec-light">
-  <div class="section-label reveal">
-    <span>Toolkit</span>
-    <span class="section-num">03</span>
-  </div>
-  <h2 class="section-title reveal d1">Skills &amp;<br><em>technologies</em></h2>
-  <div class="skills-layout">
-    <div class="skills-intro">
-      <p class="reveal d2">A modern stack honed across years of shipping production work. Each technology chosen with purpose — to build fast, maintainable, and beautiful.</p>
-      <p class="reveal d3">From pixel-level design decisions in Figma to deployed cloud infrastructure — I operate across the full spectrum of digital craft.</p>
+<!-- ===== SKILLS SECTION ===== -->
+<section id="skills" class="skills-section">
+  <p class="section-eyebrow">Toolkit</p>
+  <h2 class="section-title">Skills & <em>technologies</em></h2>
+  <p class="section-subtitle">A modern stack honed across years of shipping production work.</p>
+
+  <div class="skills-grid">
+    <div class="skill-category">
+      <span class="category-icon">⬡</span>
+      <p class="category-label">Frontend</p>
+      <div class="tags">
+        <span class="tag featured">React</span>
+        <span class="tag featured">Next.js</span>
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Tailwind CSS</span>
+      </div>
     </div>
-    <div class="skills-bars">
-      <div class="skill-item reveal">
-        <div class="skill-header"><span class="skill-name">HTML / CSS</span><span class="skill-pct">100%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="1"></div></div>
+
+    <div class="skill-category">
+      <span class="category-icon">◈</span>
+      <p class="category-label">Backend</p>
+      <div class="tags">
+        <span class="tag featured">Node.js</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">Supabase</span>
+        <span class="tag">REST APIs</span>
       </div>
-      <div class="skill-item reveal d1">
-        <div class="skill-header"><span class="skill-name">React / Next.js</span><span class="skill-pct">95%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="0.95"></div></div>
+    </div>
+
+    <div class="skill-category">
+      <span class="category-icon">◻</span>
+      <p class="category-label">Design</p>
+      <div class="tags">
+        <span class="tag featured">Figma</span>
+        <span class="tag">Adobe Illustrator</span>
+        <span class="tag">Photoshop</span>
+        <span class="tag">UI/UX</span>
+        <span class="tag">Branding</span>
       </div>
-      <div class="skill-item reveal d2">
-        <div class="skill-header"><span class="skill-name">JavaScript / TypeScript</span><span class="skill-pct">94%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="0.94"></div></div>
+    </div>
+
+    <div class="skill-category">
+      <span class="category-icon">⬟</span>
+      <p class="category-label">Platforms & Tools</p>
+      <div class="tags">
+        <span class="tag featured">Webflow</span>
+        <span class="tag featured">Shopify</span>
+        <span class="tag">Vercel</span>
+        <span class="tag">Git</span>
+        <span class="tag">VS Code</span>
       </div>
-      <div class="skill-item reveal d3">
-        <div class="skill-header"><span class="skill-name">Tailwind CSS</span><span class="skill-pct">96%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="0.96"></div></div>
-      </div>
-      <div class="skill-item reveal d4">
-        <div class="skill-header"><span class="skill-name">Node.js</span><span class="skill-pct">85%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="0.85"></div></div>
-      </div>
-      <div class="skill-item reveal d5">
-        <div class="skill-header"><span class="skill-name">Figma / Adobe Suite</span><span class="skill-pct">92%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="0.92"></div></div>
-      </div>
+    </div>
+  </div>
+
+  <div class="bottom-strip">
+    <span class="currently-learning">Currently exploring</span>
+    <div class="learning-tags">
+      <span class="learning-tag"><span class="dot"></span> Three.js</span>
+      <span class="learning-tag"><span class="dot"></span> Framer Motion</span>
+      <span class="learning-tag"><span class="dot"></span> GSAP</span>
     </div>
   </div>
 </section>
