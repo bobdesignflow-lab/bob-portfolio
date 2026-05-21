@@ -348,6 +348,20 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
   display: block;
 }
 
+.pf-iframe-blocked {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  color: #c8c0b0;
+  background: #080f1e;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
 /* Hover reveal CTA */
 .pf-preview-cta {
   position: absolute;
@@ -1591,16 +1605,9 @@ footer {
     <div class="pf-card featured">
       <div class="pf-preview">
         <div class="pf-iframe-wrap">
-          <iframe
-            src="https://www.shopzetu.com/"
-            loading="lazy"
-            title="Shop Zetu live preview"
-            scrolling="no"
-            tabindex="-1"
-            aria-hidden="true">
-          </iframe>
-          <!-- transparent click-pass layer -->
-          <div style="position:absolute;inset:0;z-index:2;"></div>
+          <div class="pf-iframe-blocked">
+            Live preview blocked by the destination site's security settings. Use the live site link below.
+          </div>
         </div>
         <div class="pf-preview-cta">
           <a href="https://www.shopzetu.com/" target="_blank" rel="noopener noreferrer">
@@ -1639,15 +1646,9 @@ footer {
     <div class="pf-card">
       <div class="pf-preview">
         <div class="pf-iframe-wrap">
-          <iframe
-            src="https://aanddstore.co.ke/"
-            loading="lazy"
-            title="A&amp;D Store Kenya live preview"
-            scrolling="no"
-            tabindex="-1"
-            aria-hidden="true">
-          </iframe>
-          <div style="position:absolute;inset:0;z-index:2;"></div>
+          <div class="pf-iframe-blocked">
+            Live preview blocked by the destination site's security settings. Use the live site link below.
+          </div>
         </div>
         <div class="pf-preview-cta">
           <a href="https://aanddstore.co.ke/" target="_blank" rel="noopener noreferrer">
@@ -2109,7 +2110,7 @@ footer {
       </svg>
     </button>
   </div>
-  <div class="bob-footer"><p>Powered by Claude · Robert Thuo Njehu</p></div>
+  <div class="bob-footer"><p>Powered by Google Gemini · Robert Thuo Njehu</p></div>
 </div>
 
 <script>
@@ -2341,26 +2342,8 @@ function initSite() {
   let isOpen      = false;
   let isLoading   = false;
   let greeted     = false;
-  let history     = [];
 
-  const SYSTEM = `You are Bob's AI Agent — the intelligent assistant embedded in Robert Thuo Njehu's portfolio website (thecodehub-ke.vercel.app).
-
-Robert is a multidisciplinary designer & full-stack developer based in Nairobi, Kenya. He specialises in:
-- Cinematic, high-converting websites and landing pages
-- React / Next.js / Node.js full-stack development  
-- UI/UX design (Figma, research-led, handoff-ready)
-- Brand identity, logos and visual systems
-- E-commerce (Shopify, Webflow, headless)
-- Mobile-responsive, SEO-optimised builds
-
-His standout projects include Shop Zetu (Kenya's premier fashion e-commerce platform) and A&D Store Kenya (hardware & building materials).
-He is available for new projects. Contact: bob.designflow@gmail.com | +254 713 911 222 | WhatsApp available.
-
-Your personality: refined, confident, and warm — matching the luxury aesthetic of the portfolio. Never robotic. Be concise (2–4 sentences max per reply). Guide visitors toward a project conversation or showing relevant work. 
-
-If asked about pricing: Robert works on project-based quotes — encourage them to describe their project so Robert can provide a tailored estimate.
-If asked something you don't know: offer to have Robert follow up directly.
-Always sign off important answers with a subtle nudge to get in touch.`;
+  // Backend chat endpoint handles AI generation, security, and API credentials.
 
   const QUICK_REPLIES = [
     { label: "See React projects →",  text: "Can you show me Robert's React or Next.js projects?" },
@@ -2425,27 +2408,6 @@ Always sign off important answers with a subtle nudge to get in touch.`;
     if (el) el.remove();
   }
 
-  async function callClaude(userText) {
-    history.push({ role: 'user', content: userText });
-
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: SYSTEM,
-        messages: history,
-      }),
-    });
-
-    if (!res.ok) throw new Error(`API error ${res.status}`);
-    const data = await res.json();
-    const reply = data.content.map(b => b.text || '').join('').trim();
-    history.push({ role: 'assistant', content: reply });
-    return reply;
-  }
-
   async function sendMessage(text) {
     const msg = text.trim();
     if (!msg || isLoading) return;
@@ -2461,9 +2423,17 @@ Always sign off important answers with a subtle nudge to get in touch.`;
     showTyping();
 
     try {
-      const reply = await callClaude(msg);
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userMessage: msg })
+      });
+
+      if (!res.ok) throw new Error(`Server error ${res.status}`);
+      const data = await res.json();
+
       removeTyping();
-      appendMessage('bot', reply);
+      appendMessage('bot', data.reply || "Sorry, I couldn't get a response right now.");
     } catch (err) {
       removeTyping();
       appendMessage('bot', "Something went wrong on my end — but you can reach Robert directly at bob.designflow@gmail.com or on WhatsApp.");
@@ -2482,11 +2452,6 @@ Always sign off important answers with a subtle nudge to get in touch.`;
       `${timeGreet} — I'm Bob's AI, Robert's virtual assistant. Whether you're looking for a stunning website, a React build, or a full brand identity, Robert's your person. What brings you here today?`,
       true
     );
-
-    history.push({
-      role: 'assistant',
-      content: `${timeGreet} — I'm Bob's AI, Robert's virtual assistant. Whether you're looking for a stunning website, a React build, or a full brand identity, Robert's your person. What brings you here today?`
-    });
   }
 
   fab.addEventListener('click', () => {
