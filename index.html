@@ -425,8 +425,15 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 
 /* WHY ME */
 .why-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border-gold);margin-top:4rem}
-.why-item{padding:3rem;border-right:1px solid var(--border-gold);border-bottom:1px solid var(--border-gold);transition:background .3s}
-.why-item:hover{background:var(--paper-dark)}
+.why-item{padding:3rem;border-right:1px solid var(--border-gold);border-bottom:1px solid var(--border-gold);transition:background .3s ease, transform .25s ease}
+.why-item:hover{background:var(--paper-dark);transform:translateY(-2px)}
+.why-item .why-title,
+.why-item .why-desc,
+.why-item .why-icon{transition:color .3s ease, border-color .3s ease, opacity .3s ease}
+.why-item:hover .why-title{color:var(--gold)}
+.why-item:hover .why-desc{color:rgba(255,255,255,.6)}
+.why-item:hover .why-icon{border-color:var(--gold)}
+.why-item:hover .why-icon-inner{background:var(--gold)}
 .why-item:nth-child(3n){border-right:none}
 .why-item:nth-last-child(-n+3){border-bottom:none}
 .why-icon{width:2.2rem;height:2.2rem;border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
