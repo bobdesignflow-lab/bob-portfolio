@@ -108,9 +108,9 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 
 /* ABOUT */
 #about{background:var(--surface);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;padding:8rem 4rem}
-.about-image{position:relative}
+.about-image{position:relative;overflow:hidden}
 .about-image img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
-.about-image::before{content:'';position:absolute;inset:-1.5rem 1.5rem 1.5rem -1.5rem;border:1px solid var(--border-gold);z-index:-1}
+.about-image::before{content:'';position:absolute;inset:-1.5rem;border:1px solid var(--border-gold);z-index:-1}
 .about-tags{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
 .about-tag{font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--border-gold);padding:.4rem 1rem}
 .about-body{font-size:1.05rem;line-height:1.9;color:var(--muted-on-light);font-weight:300;margin-bottom:1.2rem}
