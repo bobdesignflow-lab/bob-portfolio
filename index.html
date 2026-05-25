@@ -1006,6 +1006,7 @@ footer{background:var(--surface);padding:2.5rem 4rem;display:flex;justify-conten
   .nav-close:focus{outline:none;box-shadow:0 0 0 3px rgba(184,150,90,0.12)}
   .nav-links.open a:hover{color:var(--gold)}
   .nav-links.open::before{content:'';position:absolute;inset:0;background:rgba(6,6,6,.98);pointer-events:none}
+  nav.menu-open{backdrop-filter:none !important;background:rgba(6,6,6,.995) !important;border-bottom:none !important}
   #skills{padding:5rem 2rem}
   .skills-section{padding:5rem 2rem}
   .bottom-strip{padding:1rem;flex-direction:column;align-items:flex-start;gap:.75rem}
@@ -2349,6 +2350,7 @@ function initSite() {
     const isOpen = !links.classList.contains('open');
     links.classList.toggle('open');
     toggle.classList.toggle('open');
+    nav.classList.toggle('menu-open', isOpen);
     document.body.classList.toggle('lock-scroll', isOpen);
     document.documentElement.classList.toggle('lock-scroll', isOpen);
   });
@@ -2356,12 +2358,14 @@ function initSite() {
   if (closeBtn) closeBtn.addEventListener('click', ()=>{
     links.classList.remove('open');
     toggle.classList.remove('open');
+    nav.classList.remove('menu-open');
     document.body.classList.remove('lock-scroll');
     document.documentElement.classList.remove('lock-scroll');
   });
   links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
     links.classList.remove('open');
     toggle.classList.remove('open');
+    nav.classList.remove('menu-open');
     document.body.classList.remove('lock-scroll');
     document.documentElement.classList.remove('lock-scroll');
   }));
