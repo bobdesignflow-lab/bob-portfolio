@@ -57,11 +57,14 @@ nav.scrolled{background:rgba(12,10,9,.88);backdrop-filter:blur(14px);padding:1re
 .nav-links a:hover::after{transform:scaleX(1)}
 .nav-cta{font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:.6rem 1.6rem;text-decoration:none;transition:background .3s;font-family:'Jost',sans-serif}
 .nav-cta:hover{background:var(--gold-light)}
-.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem;position:relative;z-index:100}
-.nav-toggle span{display:block;width:24px;height:1px;background:var(--paper);margin:5px 0;transition:all .3s}
+.nav-toggle{display:none;background:transparent;border:1px solid transparent;cursor:pointer;padding:.55rem .65rem;border-radius:40px;position:relative;z-index:100;transition:background .4s,border-color .4s,transform .3s}
+.nav-toggle span{display:block;width:22px;height:1px;background:var(--paper);margin:5px 0;transition:all .3s}
 .nav-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
 .nav-toggle.open span:nth-child(2){opacity:0;transform:scale(0)}
 .nav-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+nav.scrolled .nav-toggle{background:rgba(184,150,90,.08);border-color:rgba(184,150,90,.25)}
+nav.scrolled .nav-toggle span{background:var(--gold)}
+nav.scrolled .nav-toggle:hover{background:rgba(184,150,90,.15);transform:scale(1.05)}
 .nav-close{display:none}
 
 /* HERO */
